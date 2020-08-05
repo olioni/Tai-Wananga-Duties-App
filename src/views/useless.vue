@@ -1,15 +1,14 @@
 <template>
   <div class="home">
-    <componenttest router-link to="/about" />
+  
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import componenttest from '@/components/componenttest.vue'
 
 export default {
-  name: 'Home',
+  name: 'useless',
   components: {
     componenttest
   }

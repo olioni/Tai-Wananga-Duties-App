@@ -1,17 +1,35 @@
 <template>
   <div class="home">
-    <componenttest router-link to="/about" />
+    <indexButtons/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import componenttest from '@/components/componenttest.vue'
+import indexButtons from '@/components/buttons.vue'
+
 
 export default {
   name: 'Home',
   components: {
-    componenttest
+    indexButtons
   }
 }
 </script>
+
+<style scoped>
+  * {
+    margin: 0;
+  }
+
+  .home {
+    height: 100%;
+    width: 100%;
+  }
+
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

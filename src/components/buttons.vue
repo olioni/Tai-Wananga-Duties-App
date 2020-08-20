@@ -4,7 +4,7 @@
             <h1>TAIOHI DUTIES</h1>
         </div>
         <div class="index-buttons">
-            <router-link to="/kitchen">
+            <router-link to="/Kitchen">
                 <button>KITCHEN</button>
             </router-link>
             <button>HOKOWHITU</button>
@@ -28,6 +28,8 @@ export default {
     margin: 0;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center; 
 }
 
 .index-buttons {
@@ -42,17 +44,26 @@ export default {
 .title {
     font-size: 40px;
     bottom: 0;
-    width: 100%;
+    /* width: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 h1 {
-    border: solid 2px black;
+    /* border: solid 3px black; */
     border-radius: 20px;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 50vw;
+    height: 12vh;
 }
 
 button {
-    background-color: grey;
-    color: white;       
+    background-color: rgb(230, 230, 230);
+    color: rgb(0, 0, 0);       
     border-radius: 15px;
     border: none;
     height: 15vh;
@@ -62,11 +73,12 @@ button {
     justify-content: center;
     font-size: 40px;
     margin: 5px;
+    font-weight: bold;
 }
 
 button:hover {
-    background-color: #e3e3e3;
-    color: #242424;
+    background-color: #4e4e4e;
+    color: #ffffff;
     cursor: pointer;
     transition: 0.3s;
 }

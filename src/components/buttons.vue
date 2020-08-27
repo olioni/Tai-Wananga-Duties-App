@@ -51,7 +51,7 @@ export default {
 }
 
 h1 {
-    /* border: solid 3px black; */
+    border: solid 10px black;
     border-radius: 20px;
     color: black;
     display: flex;

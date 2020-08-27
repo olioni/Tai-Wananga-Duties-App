@@ -1,7 +1,7 @@
 <template>
   <div class="kitchen">
     <taiohiPicker @plusClicked="plusClicked"/>
-    <popup v-if="popupFlag" @xClicked="closePopup"/>
+    <popup v-if="popupFlag" @xClicked="closePopup()" :house="nui"/>
   </div>
 </template>
 
@@ -9,16 +9,36 @@
 // @ is an alias to /src
 import taiohiPicker from '@/components/taiohiPicker.vue'
 import popup from '@/components/popup.vue'
+import popupPhotos from '@/components/popupPhotos.vue'
 
 export default {
   name: 'Kitchen',
   components: {
     taiohiPicker,
-    popup
-  }, 
+    popup,
+    popupPhotos
+  },
+  computed: {
+
+  },
   data() {
     return {
-      popupFlag: false
+      popupFlag: false,
+      photosFlag: false,
+        nui: [
+        "olioni",
+        "margaret",
+        "atama",
+        "aria",
+        "jodeci",
+        "teise",
+        "cage",
+        "maia",
+        "ayah",
+        "calais",
+        "nathaniel",
+        "jahnaia"
+        ],
     }
   }, 
   methods: {

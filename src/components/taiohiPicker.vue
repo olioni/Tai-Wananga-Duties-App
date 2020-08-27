@@ -3,30 +3,61 @@
         <h1 class="title">KITCHEN DUTIES</h1>
         <div class="rows">
             <div class="topRow">
-                <div class="box">
-                    <h1 class="plus" @click="showPopup()">+</h1>
+                <div class="circle">
+                    <div class="box">
+                        <h1 class="plus" @click="showPopup()">+</h1>
+                    </div>
+                    <h3>BINS</h3>
                 </div>
-                <div class="box">
+                <div class="circle">
+                    <div class="box">
+                        <h1 class="plus" @click="showPopup()">+</h1>
+                    </div>
+                    <h3>SERVERY</h3>
                 </div>
-                <div class="box">
+                <div class="circle">
+                    <div class="box">
+                        <h1 class="plus" @click="showPopup()">+</h1>
+                    </div>
+                    <h3>DRYING</h3>
                 </div>
-                <div class="box">
+                <div class="circle">
+                    <div class="box">
+                        <h1 class="plus" @click="showPopup()">+</h1>
+                    </div>
+                    <h3>POTS</h3>
                 </div>
             </div>
             <div class="bottomRow">
-                <div class="box">
+                <div class="circle">
+                    <div class="box">
+                        <h1 class="plus" @click="showPopup()">+</h1>
+                    </div>
+                    <h3>TABLES</h3>
                 </div>
-                <div class="box">
+                <div class="circle">
+                    <div class="box">
+                        <h1 class="plus" @click="showPopup()">+</h1>
+                    </div>
+                     <h3>RINSING</h3>
                 </div>
-                <div class="box">
+                <div class="circle">
+                    <div class="box">
+                        <h1 class="plus" @click="showPopup()">+</h1>
+                    </div>
+                    <h3>FLOORS</h3>
                 </div>
-                <div class="box">
+                <div class="circle">
+                    <div class="box">
+                        <h1 class="plus" @click="showPopup()">+</h1>
+                    </div>
+                    <h3>CHAIRS</h3>
                 </div>
             </div>
         </div>
         <div class="return">
             <router-link to="/">
-                <button>Return</button>
+                <button>BACK</button>
             </router-link>
         </div>
 
@@ -50,12 +81,13 @@ export default {
       showPopup() {
           console.log('emitting now...')
           this.$emit('plusClicked')
+          console.log('geting photos...')
       }
   }
 }
 </script>
 
-<style scope>
+<style scoped>
 .bottomRow, .topRow {
     display: flex;
     flex-direction: row;
@@ -69,6 +101,7 @@ export default {
     border-radius: 50%;
     margin: 10px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -127,5 +160,10 @@ a {
     color: rgb(236, 236, 236);
     cursor: pointer;
     transition: 0.3s;
+}
+
+h3 {
+    font-size: 25px;
+    font-weight: bolder;
 }
 </style>

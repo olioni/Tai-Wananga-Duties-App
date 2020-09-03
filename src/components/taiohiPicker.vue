@@ -2,8 +2,10 @@
     <div class="main">
         
         <div class="rows">
-                <div v-for="(value, name) in dutyNames" :key="name.id" class="circle" :id="name">
-                    <div class="box">
+                <div v-for="(value, name) in dutiesObj[dutyArea.toLowerCase()]" :key="name.id" class="circle" :id="name">
+                    <div v-if="value" class="box" :style="{ backgroundImage: `url(  ${require(  `../assets/taiohi-photos/${value}.png`  )}  )` }" @click="showPopup(name)">
+                    </div>
+                    <div v-else class="box">
                         <h1 class="plus" @click="showPopup(name)">+</h1>
                     </div>
                     <h3> {{name.toUpperCase()}} </h3>
@@ -24,8 +26,8 @@
 export default {
   name: 'taiohiPicker',
   props: [
-      'dutyNames',
-      'dutyArea'
+      'dutiesObj',
+      'dutyArea',
   ],
   data() {
      return {
@@ -67,6 +69,7 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-size: cover;
 }
 
 .main {

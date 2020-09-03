@@ -3,7 +3,7 @@
     <div id="heading">
       <h1 class="title">{{dutyArea.toUpperCase()}} DUTIES</h1>
     </div>
-    <taiohiPicker @plusClicked="plusClicked" :dutyArea="dutyArea" :dutyNames="dutiesObj[dutyArea.toLowerCase()]"/>
+    <taiohiPicker @plusClicked="plusClicked" :dutiesObj="dutiesObj"  :dutyArea="dutyArea"/>
     <popup v-if="popupFlag" @xClicked="closePopup()" :dutyArea="dutyArea" :dutyType="dutyType" :house="nui"/>
   </div>
 </template>
@@ -48,10 +48,10 @@ export default {
       dutyType: '',
       dutiesObj: {
         kitchen: {
-          bins: '',
-          servery: '',
-          drying: '',
-          pots: '',
+          bins: 'olioni',
+          servery: 'meelah',
+          drying: 'atama',
+          pots: 'malakai',
           tables: '',
           rinsing: '',
           floors: '',

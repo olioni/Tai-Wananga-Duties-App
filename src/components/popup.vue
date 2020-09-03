@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div class="inside">
-            <popupPhotos v-for="name in house" :key="name.id" :name="name"/>
+            <popupPhotos v-for="name in house" :key="name.id" :dutyType="dutyType" :dutyArea="dutyArea" :name="name"/>
         </div>
         <h1 class="x" @click="closePopup()">X</h1>
     </div>
@@ -12,7 +12,7 @@ import popupPhotos from '@/components/popupPhotos.vue'
 
 export default {
   name: 'popup',
-  props: ['house'],
+  props: ['house', 'dutyType', 'dutyArea'],
   components: {
       popupPhotos
   },
@@ -33,7 +33,7 @@ export default {
         console.log(this.house)
 
         //loop array to create images of taiohi w/ names
-    
+
         
         }
   }
@@ -58,7 +58,6 @@ export default {
     position: relative;
     height:700px;
     top: 50%;
-    left: 15%;
     margin-top: -800px;
 }
 

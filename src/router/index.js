@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
-import Kitchen from '../views/Kitchen.vue'
+import DutyDashboard from '../views/DutyDashboard.vue'
 
 Vue.use(VueRouter)
 
@@ -12,9 +12,9 @@ Vue.use(VueRouter)
     component: Home
   },
   {
-    path: '/Kitchen',
-    name: 'Kitchen',
-    component: Kitchen 
+    path: '/DutyDashboard',
+    name: 'DutyDashboard',
+    component: DutyDashboard 
   }                                                                                                                             
   ]
 

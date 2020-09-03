@@ -1,6 +1,4 @@
 
-
-<script>
   // Your web app's Firebase configuration
   var firebaseConfig = {
     apiKey: "AIzaSyAqbg5SKNcOY9fUreQYF-rjHKKM_b5adCw",
@@ -12,7 +10,8 @@
     appId: "1:884027418734:web:74435980018bd60c949e7f",
     measurementId: "G-BSM0YPD35N"
   };
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-</script>
+  // Initialize Firebase //
+  export const firebaseApp = firebase.initializeApp(firebaseConfig)
+  // firebase.analytics(); //
+
+  export const db = firebaseApp.firestore()

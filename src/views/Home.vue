@@ -13,6 +13,19 @@ export default {
   name: 'Home',
   components: {
     indexButtons
+  },
+  mounted() {
+    // TO DO: get duties obj from firebase
+    /*
+    db.collection("subjects").onSnapshot(snapshot => {
+            const subjectsInDatabase = [];
+            snapshot.forEach(snap => {
+               subjectsInDatabase.push(snap.data())
+            })
+            this.subjects = subjectsInDatabase
+            console.log(this.subjects)
+         })
+    */
   }
 }
 </script>

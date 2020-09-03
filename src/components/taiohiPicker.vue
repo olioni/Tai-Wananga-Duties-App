@@ -1,59 +1,13 @@
 <template>
     <div class="main">
-        <h1 class="title">KITCHEN DUTIES</h1>
+        
         <div class="rows">
-            <div class="topRow">
-                <div class="circle">
+                <div v-for="(value, name) in dutyNames" :key="name.id" class="circle" :id="name">
                     <div class="box">
-                        <h1 class="plus" @click="showPopup()">+</h1>
+                        <h1 class="plus" @click="showPopup(name)">+</h1>
                     </div>
-                    <h3>BINS</h3>
+                    <h3> {{name.toUpperCase()}} </h3>
                 </div>
-                <div class="circle">
-                    <div class="box">
-                        <h1 class="plus" @click="showPopup()">+</h1>
-                    </div>
-                    <h3>SERVERY</h3>
-                </div>
-                <div class="circle">
-                    <div class="box">
-                        <h1 class="plus" @click="showPopup()">+</h1>
-                    </div>
-                    <h3>DRYING</h3>
-                </div>
-                <div class="circle">
-                    <div class="box">
-                        <h1 class="plus" @click="showPopup()">+</h1>
-                    </div>
-                    <h3>POTS</h3>
-                </div>
-            </div>
-            <div class="bottomRow">
-                <div class="circle">
-                    <div class="box">
-                        <h1 class="plus" @click="showPopup()">+</h1>
-                    </div>
-                    <h3>TABLES</h3>
-                </div>
-                <div class="circle">
-                    <div class="box">
-                        <h1 class="plus" @click="showPopup()">+</h1>
-                    </div>
-                     <h3>RINSING</h3>
-                </div>
-                <div class="circle">
-                    <div class="box">
-                        <h1 class="plus" @click="showPopup()">+</h1>
-                    </div>
-                    <h3>FLOORS</h3>
-                </div>
-                <div class="circle">
-                    <div class="box">
-                        <h1 class="plus" @click="showPopup()">+</h1>
-                    </div>
-                    <h3>CHAIRS</h3>
-                </div>
-            </div>
         </div>
         <div class="return">
             <router-link to="/">
@@ -69,18 +23,24 @@
 <script>
 export default {
   name: 'taiohiPicker',
-  props: {
-    msg: String
-  },
+  props: [
+      'dutyNames',
+      'dutyArea'
+  ],
   data() {
      return {
-         popup: false
+         popup: false,
+         dutyType: ''
      }
   },
+  mounted() {
+      console.log(this.dutyNames)
+  },
   methods: {
-      showPopup() {
+      showPopup(dutyType) {
+          this.dutyType = dutyType
           console.log('emitting now...')
-          this.$emit('plusClicked')
+          this.$emit('plusClicked', this.dutyType)
           console.log('geting photos...')
       }
   }
@@ -88,10 +48,13 @@ export default {
 </script>
 
 <style scoped>
-.bottomRow, .topRow {
+.rows {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
 }
 
 .box {
@@ -104,18 +67,6 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-
-.title {
-    border: solid 7px black;
-    border-radius: 20px;
-    color: black;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 50vw;
-    height: 12vh;
-    font-size: 60px;
 }
 
 .main {

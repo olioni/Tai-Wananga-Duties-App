@@ -5,17 +5,18 @@
 </template>
 
 <script>
+import firebase from "firebase";
+import { db } from './firebase'
+
+// import { studentsDb } from "./firebaseInit";
+
 export default {
     name: 'popupPhotos',
-    props: ['name'],
+    props: ['name', 'dutyType', 'dutyArea'],
     data() {
         return {
             houseOnKitchen: 'nui',
-            dutiesObj: {
-                kitchen: {
-                    bins: ''
-                }
-            }
+            selectedTaiohi: ''
         }
     },
     mounted() {
@@ -23,7 +24,16 @@ export default {
     },
     methods: {
         saveData() {
-            this.name
+
+            let taiohiOnDuty = {}
+
+            taiohiOnDuty[this.dutyType] = this.name
+
+            console.log(this.name + " is on " + this.dutyType + ' in ' + this.dutyArea)
+            // this.selectedTaiohi = this.name
+            // this.$emit("saveObj", this.selectedTaiohi)
+            db.collection("duties").doc(this.dutyArea).set(taiohiOnDuty)
+
         }
 
     }

@@ -4,12 +4,18 @@
             <h1>TAIOHI DUTIES</h1>
         </div>
         <div class="index-buttons">
-            <router-link to="/Kitchen">
+            <router-link :to="{name: 'DutyDashboard', params: {id: 'Kitchen'}}">
                 <button>KITCHEN</button>
             </router-link>
-            <button>HOKOWHITU</button>
-            <button>ILAB</button>
-            <button>AKO</button>
+            <router-link :to="{name: 'DutyDashboard', params: {id: 'Hokowhitu'}}">
+                <button>HOKOWHITU</button>
+            </router-link>
+            <router-link :to="{name: 'DutyDashboard', params: {id: 'Ilab'}}">
+                <button>ILAB</button>
+            </router-link>
+            <router-link :to="{name: 'DutyDashboard', params: {id: 'Ako'}}">
+                <button>AKO</button>
+            </router-link>
         </div>
     </div>
 </template>

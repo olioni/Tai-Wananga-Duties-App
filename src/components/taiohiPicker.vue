@@ -2,12 +2,24 @@
     <div class="main">
         
         <div class="rows">
-                <div v-for="(value, name) in dutyNames" :key="name.id" class="circle" :id="name">
-                    <div class="box">
-                        <h1 class="plus" @click="showPopup(name)">+</h1>
-                    </div>
-                    <h3> {{name.toUpperCase()}} </h3>
+            <div v-for="(value, name) in dutiesObj[dutyArea.toLowerCase()]" :key="name.id" class="circle" :id="name">
+
+                <!-- picture -->
+                <div v-if="value" class="box" :style="{ 
+                    backgroundImage: `url( ${require( `../assets/taiohi-photos/${value}.png` )} )` 
+                }" @click="showPopup(name)">
                 </div>
+
+                <!-- plus -->
+                <div v-else class="box">
+                    <h1 class="plus" @click="showPopup(name)">+</h1>
+                </div>
+
+                <!-- duty type -->
+                <h3> {{name.toUpperCase()}} </h3>
+
+
+            </div>
         </div>
         <div class="return">
             <router-link to="/">
@@ -24,8 +36,8 @@
 export default {
   name: 'taiohiPicker',
   props: [
-      'dutyNames',
-      'dutyArea'
+      'dutiesObj',
+      'dutyArea',
   ],
   data() {
      return {
@@ -38,10 +50,9 @@ export default {
   },
   methods: {
       showPopup(dutyType) {
-          this.dutyType = dutyType
-          console.log('emitting now...')
-          this.$emit('plusClicked', this.dutyType)
-          console.log('geting photos...')
+            console.log("showing popup for: ", dutyType)
+            // emiting duty type)
+            this.$emit('plusClicked', dutyType)
       }
   }
 }
@@ -116,5 +127,16 @@ a {
 h3 {
     font-size: 25px;
     font-weight: bolder;
+}
+
+.box {
+    background-position: center;
+    background-size: 200px;
+}
+
+.box:hover {
+    cursor: pointer;
+    background-color: rgb(163, 163, 163);
+    transition: 0.3s;
 }
 </style>

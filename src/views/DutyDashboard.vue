@@ -13,21 +13,46 @@
 import taiohiPicker from '@/components/taiohiPicker.vue'
 import popup from '@/components/popup.vue'
 import popupPhotos from '@/components/popupPhotos.vue'
+import { db } from '../components/firebase'
 
 import { db } from '../components/firebase' 
 
 export default {
   name: 'DutyDashboard',
   components: {
-    taiohiPicker,
-    popup,
-    popupPhotos
+      taiohiPicker,
+      popup,
+      popupPhotos
   },
   mounted() {
     
   },
   data() {
     return {
+      manawaOnKitchen: {
+        kitchen: 'manawa',
+        hokowhitu: 'ariki',
+        ilab: 'nui',
+        ako: 'kaha'
+      },
+      kahaOnKitchen: {
+        kitchen: 'kaha',
+        hokowhitu: 'nui',
+        ilab: 'manawa',
+        ako: 'ariki'
+      },
+      arikiOnKitchen: {
+        kitchen: 'ariki',
+        hokowhitu: 'manawa',
+        ilab: 'kaha',
+        ako: 'nui'
+      },
+      nuiOnKitchen: {
+        kitchen: 'nui',
+        hokowhitu: 'kaha',
+        ilab: 'ariki',
+        ako: 'manawa'
+      },
       dutyArea: this.$route.params.id,
       dutiesObj: this.$route.params.dutiesObj,
       popupFlag: false,
@@ -45,6 +70,46 @@ export default {
         "calais",
         "nathaniel",
         "jahnaia"
+        ],
+        ariki: [
+          "mata",
+          "dante",
+          "terangimarie",
+          "meelah",
+          "shiquana",
+          "anton",
+          "oho",
+          "kayah",
+          "pare"
+        ],
+        kaha: [
+          "jesse",
+          "miri",
+          "dallas",
+          "kyden",
+          "lanae",
+          "rongopai",
+          "harley",
+          "nevaeh",
+          "celin",
+          "taliyah",
+          "mihiata"
+        ],
+        manawa: [
+          "kino",
+          "casey",
+          "hekaranga",
+          "cairo",
+          "malakai",
+          "kiana",
+          "kareama",
+          "akaysha",
+          "tainui",
+          "teaurereo",
+          "teahu",
+          "savannah",
+          "shannah",
+          "keyahn"
         ],
       dutyType: '',
       // dutiesObj: {
@@ -66,16 +131,18 @@ export default {
     }
   }, 
   methods: {
-    plusClicked(duty) {
-      this.dutyType = duty
-      console.log("plus was clicked")
-      console.log("dutyType is " + this.dutyType)
+    plusClicked(dutyType) {
+      console.log("plus was clicked. duty is:", dutyType)
+      this.dutyType = dutyType
       this.popupFlag = true
     },
       closePopup() {
       console.log("x was clicked")
       this.popupFlag = false
     },
+    houseRotation() {
+
+    }
   
   }
 }

@@ -29,10 +29,11 @@ export default {
 
             taiohiOnDuty[this.dutyType] = this.name
 
-            console.log(this.name + " is on " + this.dutyType + ' in ' + this.dutyArea)
+            console.log(this.name + " is in " + this.dutyArea + ' on ' + this.dutyType)
             // this.selectedTaiohi = this.name
             // this.$emit("saveObj", this.selectedTaiohi)
-            db.collection("duties").doc(this.dutyArea).set(taiohiOnDuty)
+
+            db.collection("duties").doc(this.dutyArea).update(taiohiOnDuty)
 
         }
 

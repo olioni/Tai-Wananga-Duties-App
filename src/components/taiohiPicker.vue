@@ -10,6 +10,12 @@
                     </div>
                     <h3> {{name.toUpperCase()}} </h3>
                 </div>
+
+                <!-- duty type -->
+                <h3> {{name.toUpperCase()}} </h3>
+
+
+            </div>
         </div>
         <div class="return">
             <router-link to="/">
@@ -40,10 +46,9 @@ export default {
   },
   methods: {
       showPopup(dutyType) {
-          this.dutyType = dutyType
-          console.log('emitting now...')
-          this.$emit('plusClicked', this.dutyType)
-          console.log('geting photos...')
+            console.log("showing popup for: ", dutyType)
+            // emiting duty type)
+            this.$emit('plusClicked', dutyType)
       }
   }
 }
@@ -119,5 +124,16 @@ a {
 h3 {
     font-size: 25px;
     font-weight: bolder;
+}
+
+.box {
+    background-position: center;
+    background-size: 200px;
+}
+
+.box:hover {
+    cursor: pointer;
+    background-color: rgb(163, 163, 163);
+    transition: 0.3s;
 }
 </style>

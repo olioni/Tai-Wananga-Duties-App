@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <indexButtons/>
+    <indexButtons :dutiesObj="dutiesObj"/>
   </div>
 </template>
 
@@ -8,24 +8,27 @@
 // @ is an alias to /src
 import indexButtons from '@/components/buttons.vue'
 
+import { db } from '../components/firebase' 
 
 export default {
   name: 'Home',
   components: {
     indexButtons
   },
-  mounted() {
-    // TO DO: get duties obj from firebase
-    /*
-    db.collection("subjects").onSnapshot(snapshot => {
-            const subjectsInDatabase = [];
-            snapshot.forEach(snap => {
-               subjectsInDatabase.push(snap.data())
-            })
-            this.subjects = subjectsInDatabase
-            console.log(this.subjects)
-         })
-    */
+  async created() {
+    // get duties data from firestore database
+    await db.collection("duties").onSnapshot(snapshot => {
+      const dutiesInDatabase = {};
+      snapshot.forEach(childSnapshot => {
+        dutiesInDatabase[childSnapshot.id] = childSnapshot.data()
+      })
+      this.dutiesObj = dutiesInDatabase
+    })
+  },
+  data() {
+    return {
+      dutiesObj: {},
+    }
   }
 }
 </script>

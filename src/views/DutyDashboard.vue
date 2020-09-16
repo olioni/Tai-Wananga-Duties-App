@@ -14,6 +14,8 @@ import taiohiPicker from '@/components/taiohiPicker.vue'
 import popup from '@/components/popup.vue'
 import popupPhotos from '@/components/popupPhotos.vue'
 
+import { db } from '../components/firebase' 
+
 export default {
   name: 'DutyDashboard',
   components: {
@@ -21,14 +23,13 @@ export default {
     popup,
     popupPhotos
   },
-  // computed: {
-  //   dutyArea() {
-  //     return this.$route.params.id
-  //   }
-  // },
+  mounted() {
+    
+  },
   data() {
     return {
       dutyArea: this.$route.params.id,
+      dutiesObj: this.$route.params.dutiesObj,
       popupFlag: false,
       photosFlag: false,
         nui: [
@@ -46,22 +47,22 @@ export default {
         "jahnaia"
         ],
       dutyType: '',
-      dutiesObj: {
-        kitchen: {
-          bins: 'olioni',
-          servery: 'meelah',
-          drying: 'atama',
-          pots: 'malakai',
-          tables: '',
-          rinsing: '',
-          floors: '',
-          chairs: ''
-          },
-          hokowhitu: {
-            vacuum: '',
-            chairs: '',
-          }
-        }
+      // dutiesObj: {
+      //   kitchen: {
+      //     bins: 'olioni',
+      //     servery: 'meelah',
+      //     drying: 'atama',
+      //     pots: 'malakai',
+      //     tables: '',
+      //     rinsing: '',
+      //     floors: '',
+      //     chairs: ''
+      //     },
+      //     hokowhitu: {
+      //       vacuum: '',
+      //       chairs: '',
+      //     }
+      // },
     }
   }, 
   methods: {

@@ -4,16 +4,16 @@
             <h1>TAIOHI DUTIES</h1>
         </div>
         <div class="index-buttons">
-            <router-link :to="{name: 'DutyDashboard', params: {id: 'Kitchen'}}">
+            <router-link :to="{name: 'DutyDashboard', params: {id: 'Kitchen', dutiesObj: dutiesObj }}">
                 <button>KITCHEN</button>
             </router-link>
-            <router-link :to="{name: 'DutyDashboard', params: {id: 'Hokowhitu'}}">
+            <router-link :to="{name: 'DutyDashboard', params: {id: 'Hokowhitu', dutiesObj: dutiesObj }}">
                 <button>HOKOWHITU</button>
             </router-link>
-            <router-link :to="{name: 'DutyDashboard', params: {id: 'Ilab'}}">
+            <router-link :to="{name: 'DutyDashboard', params: {id: 'Ilab', dutiesObj: dutiesObj }}">
                 <button>ILAB</button>
             </router-link>
-            <router-link :to="{name: 'DutyDashboard', params: {id: 'Ako'}}">
+            <router-link :to="{name: 'DutyDashboard', params: {id: 'Ako', dutiesObj: dutiesObj }}">
                 <button>AKO</button>
             </router-link>
         </div>
@@ -23,8 +23,16 @@
 <script>
 export default {
   name: 'indexButtons',
-  props: {
-    msg: String
+  props: ['dutiesObj'],
+  data() {
+      return {
+
+      }
+  }, 
+  methods: {
+    getDuties(dutyArea) {
+        return this.dutiesObj[dutyArea]
+    }
   }
 }
 </script>

@@ -2,7 +2,7 @@
     <div class="main">
         
         <div class="rows">
-                <div v-for="(value, name) in dutiesObj[dutyArea.toLowerCase()]" :key="name.id" class="circle" :id="name">
+                <div v-for="(value, name) in dutiesObj[dutyArea]" :key="name.id" class="circle" :id="name">
                     <div v-if="value" class="box" :style="{ backgroundImage: `url(  ${require(  `../assets/taiohi-photos/${value}.png`  )}  )` }" @click="showPopup(name)">
                     </div>
                     <div v-else class="box">
@@ -36,7 +36,7 @@ export default {
      }
   },
   mounted() {
-      console.log(this.dutyNames)
+
   },
   methods: {
       showPopup(dutyType) {

@@ -1,9 +1,9 @@
 <template>
   <div class="kitchen">
     <div id="heading">
-      <h1 class="title">{{dutyArea.toUpperCase()}} DUTIES</h1>
+      <h1 v-if="dutyArea" class="title">{{dutyArea.toUpperCase()}} DUTIES</h1>
     </div>
-    <taiohiPicker @plusClicked="plusClicked" :dutiesObj="dutiesObj"  :dutyArea="dutyArea"/>
+    <taiohiPicker @plusClicked="plusClicked" :dutyArea="dutyArea"/>
     <popup v-if="popupFlag" @xClicked="closePopup()" :dutyArea="dutyArea" :dutyType="dutyType" :house="nui"/>
   </div>
 </template>
@@ -13,7 +13,6 @@
 import taiohiPicker from '@/components/taiohiPicker.vue'
 import popup from '@/components/popup.vue'
 import popupPhotos from '@/components/popupPhotos.vue'
-import { db } from '../components/firebase'
 
 import { db } from '../components/firebase' 
 
@@ -25,10 +24,11 @@ export default {
       popupPhotos
   },
   mounted() {
-    
+
   },
   data() {
     return {
+      dutyArea: this.$route.params.id,
       manawaOnKitchen: {
         kitchen: 'manawa',
         hokowhitu: 'ariki',
@@ -53,8 +53,6 @@ export default {
         ilab: 'ariki',
         ako: 'manawa'
       },
-      dutyArea: this.$route.params.id,
-      dutiesObj: this.$route.params.dutiesObj,
       popupFlag: false,
       photosFlag: false,
         nui: [

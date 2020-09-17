@@ -8,28 +8,16 @@
 // @ is an alias to /src
 import indexButtons from '@/components/buttons.vue'
 
-import { db } from '../components/firebase' 
-
 export default {
   name: 'Home',
   components: {
     indexButtons
   },
-  async created() {
-    // get duties data from firestore database
-    await db.collection("duties").onSnapshot(snapshot => {
-      const dutiesInDatabase = {};
-      snapshot.forEach(childSnapshot => {
-        dutiesInDatabase[childSnapshot.id] = childSnapshot.data()
-      })
-      this.dutiesObj = dutiesInDatabase
-    })
-  },
   data() {
     return {
       dutiesObj: {},
     }
-  }
+  },
 }
 </script>
 

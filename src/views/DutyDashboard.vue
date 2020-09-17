@@ -3,7 +3,7 @@
     <div id="heading">
       <h1 class="title">{{dutyArea.toUpperCase()}} DUTIES</h1>
     </div>
-    <taiohiPicker @plusClicked="plusClicked" :dutyArea="dutyArea" :dutiesObj="dutiesObj"/>
+    <taiohiPicker @plusClicked="plusClicked" :dutyArea="dutyArea" :dutiesObj="dutiesObj[dutyArea]"/>
     <popup v-if="popupFlag" @xClicked="closePopup()" :dutyArea="dutyArea" :dutyType="dutyType" :house="nui"/>
   </div>
 </template>
@@ -22,24 +22,13 @@ export default {
       popup,
       popupPhotos
   },
-  // computed: {
-  //   dutyArea() {
-  //     return this.$route.params.id
-  //   }
-  // },
   mounted() {
-    db.collection("duties").onSnapshot(snapshot => {
-      const taiohiOnDuty = [];
-      snapshot.forEach(snap => {
-        taiohiOnDuty.push(snap.data())
-      })
-      console.log("taiohiOnDuty",taiohiOnDuty)
-      this.dutiesObj[this.dutyArea] = taiohiOnDuty 
-    })
-    
+    // console.log(dutiesObj)
   },
   data() {
     return {
+      dutyArea: this.$route.params.id,
+      dutiesObj: this.$route.params.dutiesObj,
       manawaOnKitchen: {
         kitchen: 'manawa',
         hokowhitu: 'ariki',
@@ -64,7 +53,6 @@ export default {
         ilab: 'ariki',
         ako: 'manawa'
       },
-      dutyArea: this.$route.params.id,
       popupFlag: false,
       photosFlag: false,
         nui: [
@@ -122,40 +110,6 @@ export default {
           "keyahn"
         ],
       dutyType: '',
-      dutiesObj: {
-        kitchen: {
-          bins: 'olioni',
-          servery: 'malakai',
-          drying: '',
-          pots: '',
-          tables: '',
-          rinsing: '',
-          floors: '',
-          chairs: ''
-          },
-          hokowhitu: {
-            vacuum1: 'atama',
-            vacuum2: '',
-            chairs: ''
-          },
-          ako: {
-            vacuum1: '',
-            vacuum2: '',
-            bins: '',
-            chairs: '',
-            tables1: '',
-            tables2: '',
-            windows: '',
-            outside: ''
-          },
-          ilab: {
-            vacuum1: '',
-            vacuum2: '',
-            bins: '',
-            chairs: '',
-            tables: '',
-          }
-        }
       }
   }, 
   methods: {

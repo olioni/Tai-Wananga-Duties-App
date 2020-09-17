@@ -1,31 +1,31 @@
 <template>
   <div class="home">
-    <indexButtons/>
+    <indexButtons :dutiesObj="dutiesObj"/>
+    <div class="drkModeSwitch">
+      <darkMode/>
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
 import indexButtons from '@/components/buttons.vue'
-
+import darkMode from '@/components/drkmdeSwitch.vue'
+import { db } from '../components/firebase'
 
 export default {
   name: 'Home',
   components: {
-    indexButtons
+    indexButtons,
+    darkMode
+  },
+  data() {
+    return {
+      dutiesObj: {}
+    }
   },
   mounted() {
-    // TO DO: get duties obj from firebase
-    /*
-    db.collection("subjects").onSnapshot(snapshot => {
-            const subjectsInDatabase = [];
-            snapshot.forEach(snap => {
-               subjectsInDatabase.push(snap.data())
-            })
-            this.subjects = subjectsInDatabase
-            console.log(this.subjects)
-         })
-    */
+    console.log(dutiesObj)
   }
 }
 </script>
@@ -38,11 +38,16 @@ export default {
   .home {
     height: 100%;
     width: 100%;
+    /* background-color: black; */
   }
 
   body {
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .drkModeSwitch {
+    margin-right: 630px;
   }
 </style>

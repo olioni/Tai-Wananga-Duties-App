@@ -34,7 +34,7 @@ export default {
             // this.$emit("saveObj", this.selectedTaiohi)
 
             db.collection("duties").doc(this.dutyArea).update(taiohiOnDuty)
-
+            
         }
 
     }

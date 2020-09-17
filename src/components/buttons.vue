@@ -4,7 +4,7 @@
             <h1>TAIOHI DUTIES</h1>
         </div>
         <div class="index-buttons">
-            <router-link :to="{name: 'DutyDashboard', params: {id: 'Kitchen'}}">
+            <router-link :to="{name: 'DutyDashboard', params: {id: 'Kitchen', dutiesObj:dutiesObj}}">
                 <button>KITCHEN</button>
             </router-link>
             <router-link :to="{name: 'DutyDashboard', params: {id: 'Hokowhitu'}}">
@@ -23,9 +23,7 @@
 <script>
 export default {
   name: 'indexButtons',
-  props: {
-    msg: String
-  }
+  props: ['dutiesObj']
 }
 </script>
 

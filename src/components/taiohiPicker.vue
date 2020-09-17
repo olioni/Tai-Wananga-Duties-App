@@ -2,7 +2,7 @@
     <div class="main">
         
         <div class="rows">
-            <div v-for="(value, name) in dutiesObj[dutyArea.toLowerCase()]" :key="name.id" class="circle" :id="name">
+            <div v-for="(value, name) in dutiesObj" :key="name.id" class="circle" :id="name">
 
                 <!-- picture -->
                 <div v-if="value" class="box" :style="{ 
@@ -17,7 +17,7 @@
 
                 <!-- duty type -->
                 <h3> {{name.toUpperCase()}} </h3>
-
+                
 
             </div>
         </div>
@@ -36,8 +36,8 @@
 export default {
   name: 'taiohiPicker',
   props: [
-      'dutiesObj',
       'dutyArea',
+      'dutiesObj'
   ],
   data() {
      return {
@@ -46,12 +46,12 @@ export default {
      }
   },
   mounted() {
-      console.log(this.dutyNames)
+    //   console.log(this.dutyNames)
   },
   methods: {
       showPopup(dutyType) {
             console.log("showing popup for: ", dutyType)
-            // emiting duty type)
+            // emiting duty type
             this.$emit('plusClicked', dutyType)
       }
   }

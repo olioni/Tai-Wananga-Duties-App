@@ -4,6 +4,7 @@
       <h1 v-if="dutyArea" class="title">{{dutyArea.toUpperCase()}} DUTIES</h1>
     </div>
     <taiohiPicker @plusClicked="plusClicked" :dutyArea="dutyArea"/>
+    <popupBack v-if="popupBack" @xClicked="closePopup()"/>
     <popup v-if="popupFlag" @xClicked="closePopup()" :dutyArea="dutyArea" :dutyType="dutyType" :house="nui"/>
   </div>
 </template>
@@ -13,6 +14,7 @@
 import taiohiPicker from '@/components/taiohiPicker.vue'
 import popup from '@/components/popup.vue'
 import popupPhotos from '@/components/popupPhotos.vue'
+import popupBack from '@/components/popupBack.vue'
 
 import { db } from '../components/firebase' 
 
@@ -21,7 +23,8 @@ export default {
   components: {
       taiohiPicker,
       popup,
-      popupPhotos
+      popupPhotos,
+      popupBack
   },
   mounted() {
 
@@ -29,6 +32,10 @@ export default {
   data() {
     return {
       dutyArea: this.$route.params.id,
+      // kitchenTA: false,
+      // kitchenTN: false,
+      // kitchenTM: false,
+      // kitchenTK: false,
       manawaOnKitchen: {
         kitchen: 'manawa',
         hokowhitu: 'ariki',
@@ -54,6 +61,7 @@ export default {
         ako: 'manawa'
       },
       popupFlag: false,
+      popupBack: false,
       photosFlag: false,
         nui: [
         "olioni",
@@ -64,7 +72,6 @@ export default {
         "teise",
         "cage",
         "maia",
-        "ayah",
         "calais",
         "nathaniel",
         "jahnaia"
@@ -110,22 +117,6 @@ export default {
           "keyahn"
         ],
       dutyType: '',
-      // dutiesObj: {
-      //   kitchen: {
-      //     bins: 'olioni',
-      //     servery: 'meelah',
-      //     drying: 'atama',
-      //     pots: 'malakai',
-      //     tables: '',
-      //     rinsing: '',
-      //     floors: '',
-      //     chairs: ''
-      //     },
-      //     hokowhitu: {
-      //       vacuum: '',
-      //       chairs: '',
-      //     }
-      // },
     }
   }, 
   methods: {
@@ -133,10 +124,12 @@ export default {
       console.log("plus was clicked. duty is:", dutyType)
       this.dutyType = dutyType
       this.popupFlag = true
+      this.popupBack = true
     },
       closePopup() {
       console.log("x was clicked")
       this.popupFlag = false
+      this.popupBack = false
     },
     houseRotation() {
 
@@ -147,6 +140,10 @@ export default {
 </script>
 
 <style scoped>
+*{
+  margin: 0;
+}
+
 .kitchen {
   height: 100%;
   width: 100%;

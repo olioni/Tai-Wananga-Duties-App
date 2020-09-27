@@ -22,13 +22,13 @@ export default {
 </script>
 
 <style scoped>
-  * {
-    margin: 0;
+* {
+  margin: 0;
   }
 
-  .home {
-    height: 100%;
-    width: 100%;
+.home {
+  height: 100%;
+  width: 100%;
   }
 
   body {

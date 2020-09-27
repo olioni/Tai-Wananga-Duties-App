@@ -8,7 +8,7 @@
                     <div v-else class="box">
                         <h1 class="plus" @click="showPopup(name)">+</h1>
                     </div>
-                    <h3> {{name}} </h3>
+                    <h3 class="black"> {{name.toUpperCase()}} </h3>
                 </div>
         </div>
         <div class="return">
@@ -60,6 +60,11 @@ export default {
 </script>
 
 <style scoped>
+
+*{
+  margin: 0;
+}
+
 .rows {
     display: flex;
     flex-direction: row;
@@ -67,6 +72,10 @@ export default {
     justify-content: center;
     align-items: center;
     width: 70%;
+}
+
+.black {
+    color: black;
 }
 
 .box {

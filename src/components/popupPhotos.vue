@@ -1,6 +1,6 @@
 <template>
     <div class="popupImg">
-        <img class="profilePic" :src="require('../assets/taiohi-photos/' + name +'.png' )" @click="saveData()"/>
+        <img class="profilePic" :src="require('../assets/taiohi-photos/' + name +'.png' )" @click="saveData(), close()"/>
     </div>
 </template>
 
@@ -35,6 +35,10 @@ export default {
 
             db.collection("duties").doc(this.dutyArea).update(taiohiOnDuty)
 
+        },
+        close() {
+            console.log('starting xClicked() function')
+            this.$emit('closePopup')
         }
 
     }

@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div class="inside">
-            <popupPhotos v-for="name in house" :key="name.id" :dutyType="dutyType" :dutyArea="dutyArea" :name="name"/>
+            <popupPhotos v-for="name in house" :key="name.id" :dutyType="dutyType" :dutyArea="dutyArea" :name="name" @selected="studentSelected()"/>
         </div>
         <h1 class="x" @click="closePopup()">X</h1>
     </div>
@@ -32,9 +32,11 @@ export default {
         console.log(this.house)
 
         //loop array to create images of taiohi w/ names
-
-        
-        }
+    },
+    studentSelected() {
+        console.log('student chosen, will now close popup')
+        this.$emit('close')
+    }
   }
 }
 </script>
@@ -55,8 +57,8 @@ export default {
     border-radius: 15px;
 
     position: relative;
-    height:700px;
-    top: 50%;
+    height: 700px;
+    top: -8%;
     margin-top: -800px;
 }
 
@@ -64,7 +66,7 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 70%;
+    width: 60%;
 }
 
 .x {

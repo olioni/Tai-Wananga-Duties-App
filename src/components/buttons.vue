@@ -1,56 +1,172 @@
 <template>
-    <div clas="main">
+    <div class="main" :style="{backgroundColor: backColor, transition: transTime}">
         <div class="title">
-            <h1>TAIOHI DUTIES</h1>
+            <h1 :style="{color: textColor, backgroundColor: backColor, transition: transTime, border: border}">TAIOHI DUTIES</h1>
         </div>
         <div class="index-buttons">
             <router-link :to="{name: 'DutyDashboard', params: {id: 'Kitchen'}}">
-                <button>KITCHEN</button>
+                <button @click="variableAssign()" :style="{backgroundColor: buttonColor, transition: transTime}"><h4 :style="{color: textColor, transition: transTime}">KITCHEN</h4></button>
             </router-link>
             <router-link :to="{name: 'DutyDashboard', params: {id: 'Hokowhitu'}}">
-                <button>HOKOWHITU</button>
+                <button :style="{backgroundColor: buttonColor, transition: transTime}"><h4 :style="{color: textColor, transition: transTime}">HOKOWHITU</h4></button>
             </router-link>
             <router-link :to="{name: 'DutyDashboard', params: {id: 'Ilab'}}">
-                <button>ILAB</button>
+                <button :style="{backgroundColor: buttonColor, transition: transTime}"><h4 :style="{color: textColor, transition: transTime}">ILAB</h4></button>
             </router-link>
             <router-link :to="{name: 'DutyDashboard', params: {id: 'Ako'}}">
-                <button>AKO</button>
+                <button :style="{backgroundColor: buttonColor, transition: transTime}"><h4 :style="{color: textColor, transition: transTime}">AKO</h4></button>
             </router-link>
         </div>
+        
+        <!-- switch for dark mode -->
         <div class="toggleSwitch">
-            <!-- Rounded switch -->
             <label class="switch">
-            <input type="checkbox" @click="lightDark()">
-            <span class="slider round"></span>
-            </label>
-            <h3 id="modeTxt"> {{switchText}} </h3>
+            <input ref='switch' type="checkbox" @click="lightDark()">
+            <span class="slider round">
+            </span>
+            </label :style="{backgroundColor: backColor}">
+            <h3 id="modeTxt" :style="{color: textColor, transition: 0.3 + 's'}"> {{switchText}} </h3>
         </div>
     </div>
 </template>
 
 <script>
+
+import { db } from '../components/firebase' 
+import { black } from 'color-name';
+
 export default {
   name: 'indexButtons',
   props: [],
   data() {
       return {
-          mode: 'lightMode',
-          switchText: 'LIGHT MODE'
+        mode: 'lightMode',
+        switchText: 'LIGHT MODE',     
+
+        example: 'example',
+        
+        border: '',
+        textColor: '',
+        textColor: '',
+        title: '',
+        bodyStyle: '',
+        backColor: '',
+        buttonColor: '',
+        addButton: '',
+        addTransition: '',
+        plus: '',
+        hover: '',
+        transTime: '0.3s'
+
+        // dark: false,
+        // modes: {currentMode: dark},
       }
   }, 
   methods: {
+      variableAssign() {
+          
+      },
       lightDark() {
+        // this.dark = !this.dark
+        // this.$forceUpdate()
+        // console.log('switching to', this.dark)
+
+        // db.collection("mode").doc('current').set(this.darkMode)
+        
         if (this.mode == 'lightMode') {
             console.log('going DARK')
             this.mode = 'darkMode'
+            
+            this.mode = 'darkMode'
             this.switchText ='DARK MODE'
-        } else {
+            this.backColor = '#1a1a1a'
+            this.textColor = 'white'
+            this.title = '#d9d9d9'
+            this.buttonColor = '#525252'
+            this.border = '10px solid white'
+            this.addButton = '#454545'
+            this.addTransition = 'rgb(51, 51, 51)'
+            this.plus = '#cccccc'
+            this.hover = '#575757'
+
+            this.$refs.switch.checked = true
+
+            let style = {
+                mode: this.mode,
+                switchText: this.switchText,
+                backColor: this.backColor,
+                textColor: this.textColor,
+                title: this.title,
+                buttonColor: this.buttonColor,
+                border: this.border,
+                addButton: this.addButton,
+                addTransition: this.addTransition,
+                transTime: this.transTime,
+                hover: this.hover
+            }
+
+            db.collection("mode").doc('current').set(style)
+
+            console.log('switch is set to:', this.$refs.switch.checked)
+
+            // this.modes.test = 'dark'
+            // db.collection("mode").doc('current').set(this.modes)
+        } else if (this.mode == 'darkMode') {
             console.log('going LIGHT')
-            this.mode = 'lightMode'
+
+            this.mode = 'lightMode' 
             this.switchText = 'LIGHT MODE'
+            this.backColor = 'white'
+            this.textColor = 'black'
+            this.title = 'black'
+            this.buttonColor = 'rgb(230, 230, 230)'
+            this.border = '10px solid black'
+            this.addTransition = '#808080'
+            this.plus = '#666666'
+            this.hover = '#d6d6d6'
+
+            this.$refs.switch.checked = false
+            
+            let style = {
+                mode: this.mode,
+                switchText: this.switchText,
+                backColor: this.backColor,
+                textColor: this.textColor,
+                title: this.title,
+                buttonColor: this.buttonColor,
+                border: this.border,
+                addTransition: this.addTransition,
+                hover: this.hover
+            }
+
+            db.collection("mode").doc('current').set(style)
+            // this.modes.test = 'light'
+            // db.collection("mode").doc('current').set(this.modes)
+            console.log('switch is set to:', this.$refs.switch.checked)
         }
+
       }
-  }
+  },
+    mounted() {
+        this.$bind('modeObj', db.collection("mode")).then(() => {
+        // console.log("from bind", this.modeObj[0].mode)
+        this.mode = this.modeObj[0].mode;
+        this.backColor = this.modeObj[0].backColor
+        this.textColor = this.modeObj[0].textColor
+        this.border = this.modeObj[0].border
+        this.buttonColor = this.modeObj[0].buttonColor
+        this.plus = this.modeObj[0].plus
+        this.addTransition = this.modeObj[0].addTransition
+        })
+
+      },
+    computed() {
+        if (this.mode == 'darkMode') {
+            this.$refs.switch.checked = true
+        } else {
+            this.$refs.switch.checked = false
+        }
+    }
 }
 </script>
 
@@ -61,6 +177,11 @@ export default {
     flex-direction: column;
     justify-content: center;
     align-items: center; 
+}
+
+.main {
+    width: 100vw;
+    height: 100vh;
 }
 
 .index-buttons {

@@ -1,6 +1,6 @@
 <template>
     <div class="popupImg">
-        <img class="profilePic" :src="require('../assets/taiohi-photos/' + name +'.png' )" @click="saveData(), close()"/>
+        <img class="profilePic" :src="require('../assets/taiohi-photos/' + name +'.png' )" @click="saveData()"/>
     </div>
 </template>
 
@@ -15,7 +15,6 @@ export default {
     props: ['name', 'dutyType', 'dutyArea'],
     data() {
         return {
-            houseOnKitchen: 'nui',
             selectedTaiohi: ''
         }
     },
@@ -35,10 +34,11 @@ export default {
 
             db.collection("duties").doc(this.dutyArea).update(taiohiOnDuty)
 
+            this.close()
         },
         close() {
             console.log('starting xClicked() function')
-            this.$emit('closePopup')
+            this.$emit('selected')
         }
 
     }
@@ -51,8 +51,8 @@ export default {
 }
 
 .profilePic {
-    width: 120px;
-    height: 120px;
+    width: 140px;
+    height: 140px;
     border-radius: 50%;
     background-color: rgb(145, 145, 145);
     margin-right: 5px;

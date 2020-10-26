@@ -13,7 +13,11 @@ export default {
         return {
 
         }
-    }
+
+    },
+    methods: {
+            
+        }
 }
 </script>
 
@@ -27,7 +31,7 @@ export default {
     display: block;
     position: relative;
     height: 960px;
-    top: 50%;
+    top: -5%;
     margin-top: -812px;
 }
 

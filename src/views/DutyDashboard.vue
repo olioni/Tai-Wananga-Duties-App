@@ -1,18 +1,11 @@
 <template>
   <div class="kitchen" :style="{backgroundColor: backColor}">
     <div id="heading">
-      <h1 :style="{color: textColor, border: border} "v-if="dutyArea" class="title">{{dutyArea.toUpperCase()}} DUTIES</h1>
+      <h1 :style="{color: textColor, border: border}" v-if="dutyArea" class="title">{{dutyArea.toUpperCase()}} DUTIES</h1>
     </div>
     <taiohiPicker @plusClicked="plusClicked" :dutyArea="dutyArea"/>
     <popupBack v-if="popupBack" @xClicked="closePopup()"/>
-    <popup
-      v-if="popupFlag"
-      @xClicked="closePopup()"
-      :dutyArea="dutyArea"
-      :dutyType="dutyType"
-      :house="nui"
-      @close="close()"
-    />
+    <popup v-if="popupFlag" @xClicked="closePopup()" :dutyArea="dutyArea" :dutyType="dutyType" :house="nui" :dutyPersonObj="dutyPersonObj" @close="close()"/>
   </div>
 </template>
 
@@ -130,7 +123,10 @@ export default {
       buttonColor: "",
       mode: "",
       addTransition: "",
-      plus: ""
+      plus: "",
+
+      dutyPersonObj: null
+
     };
   },
   // firestore: {
@@ -149,16 +145,17 @@ export default {
     })
   },
   methods: {
-    plusClicked(dutyType) {
-      console.log("plus was clicked. duty is:", dutyType);
-      this.dutyType = dutyType;
+    plusClicked(dutyPersonObj) {
+      this.dutyPersonObj = dutyPersonObj
+      // console.log(this.dutyPersonObj)
+      this.dutyType = dutyPersonObj.duty;
       this.popupFlag = true;
       this.popupBack = true;
-      console.log(this.popupFlag);
-      console.log(this.popupBack);
+      // console.log(this.popupFlag);
+      // console.log(this.popupBack);
     },
     closePopup() {
-      console.log("x was clicked");
+      // console.log("x was clicked");
       this.popupFlag = false;
       this.popupBack = false;
     },

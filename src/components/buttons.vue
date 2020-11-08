@@ -24,7 +24,7 @@
             <input ref='switch' type="checkbox" @click="lightDark()">
             <span class="slider round">
             </span>
-            </label :style="{backgroundColor: backColor}">
+            </label>
             <h3 id="modeTxt" :style="{color: textColor, transition: 0.3 + 's'}"> {{switchText}} </h3>
         </div>
     </div>
@@ -74,7 +74,7 @@ export default {
         // db.collection("mode").doc('current').set(this.darkMode)
         
         if (this.mode == 'lightMode') {
-            console.log('going DARK')
+            // console.log('going DARK')
             this.mode = 'darkMode'
             
             this.mode = 'darkMode'
@@ -107,12 +107,12 @@ export default {
 
             db.collection("mode").doc('current').set(style)
 
-            console.log('switch is set to:', this.$refs.switch.checked)
+            // console.log('switch is set to:', this.$refs.switch.checked)
 
             // this.modes.test = 'dark'
             // db.collection("mode").doc('current').set(this.modes)
         } else if (this.mode == 'darkMode') {
-            console.log('going LIGHT')
+            // console.log('going LIGHT')
 
             this.mode = 'lightMode' 
             this.switchText = 'LIGHT MODE'
@@ -142,7 +142,7 @@ export default {
             db.collection("mode").doc('current').set(style)
             // this.modes.test = 'light'
             // db.collection("mode").doc('current').set(this.modes)
-            console.log('switch is set to:', this.$refs.switch.checked)
+            // console.log('switch is set to:', this.$refs.switch.checked)
         }
 
       }
@@ -159,13 +159,15 @@ export default {
         this.addTransition = this.modeObj[0].addTransition
         })
 
-      },
-    computed() {
         if (this.mode == 'darkMode') {
             this.$refs.switch.checked = true
         } else {
             this.$refs.switch.checked = false
         }
+
+      },
+    computed() {
+
     }
 }
 </script>
@@ -235,6 +237,12 @@ button:hover {
     transition: 0.3s;
 }
 
+button:active {
+    box-shadow: 0 5px rgb(0, 0, 0);
+    transform: translateY(4px);
+    transition: 0.3s;
+}
+
 .main {
     margin: 0;
 }
@@ -300,6 +308,8 @@ input:checked + .slider:before {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
+
+  background-color:#838383;
 }
 
 /* Rounded sliders */

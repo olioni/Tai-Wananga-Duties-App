@@ -1,16 +1,25 @@
-https://cdn.glitch.com/07cb6954-feec-4989-bb69-d640760cd142%2Fjodeci.png?v=1592361383745
-https://cdn.glitch.com/07cb6954-feec-4989-bb69-d640760cd142%2Fkareama.png?v=1592361383942
+FONTS: 
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&display=swap');
+font-family: 'PT Sans', sans-serif;
 
-KITCHEN DUTIES:
-- bins
-- floor
-- rinsing
-- pots
-- tables
-- servery
-- chairs
-- drying
 
-OTHER DUTY PAGES HAVE YET TO BE DONE
+ADD 2 NEW FUNCTIONS:
+- Remove Function:
+    > upon press of REMOVE button display X's above photos of taiohi
+- Alread-On-Duty Function:
+    > when selecting a duty, the popup photos that have already been assigned a duty will not be pickable
 
-JESSE COMPLAINED ABOUT DARK MODE, SO MAKE A DARK MODE
+
+REMOVE FUNCTION:
+1. @clickonRemove call remove Function
+2. remove()
+    a. removeEnabled = true
+    b. v-if="removeEnabled" show the delete circles
+3. @clickon="Xclicked"
+4. xClicked(event)
+    a. user = event.target.value
+    a.1 let updatedObj = {}
+    a.2 updatedObj[dutyname] = user
+    b. db.collections.duties() .where(dutyname, == , user).update(updatedObj)
+
+ALREADY ON DUTY FUNCTION:

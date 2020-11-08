@@ -16,7 +16,7 @@ export default {
 
     },
     methods: {
-            
+
         }
 }
 </script>
@@ -26,13 +26,14 @@ export default {
 #grey {
     background-color: rgb(65, 65, 65);
     opacity: 50%;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
     display: block;
     position: relative;
-    height: 960px;
+    /* height: 960px; */
     top: -5%;
     margin-top: -812px;
 }
+
 
 </style>

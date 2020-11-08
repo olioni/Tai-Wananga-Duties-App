@@ -31,9 +31,10 @@ export default {
   width: 100%;
   }
 
-  body {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   }
+
 </style>

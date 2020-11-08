@@ -1,9 +1,11 @@
 <template>
     <div class="main">
         <div class="inside">
-            <popupPhotos v-for="name in house" :key="name.id" :dutyType="dutyType" :dutyArea="dutyArea" :name="name" @selected="studentSelected()"/>
+            <popupPhotos v-for="name in house" :key="name.id" :dutyType="dutyType" :dutyArea="dutyArea" :name="name" @selected="studentSelected()" :dutyPersonObj="dutyPersonObj"/>
         </div>
-        <h1 class="x" @click="closePopup()">X</h1>
+        <div id="circle">
+            <h1 class="x" @click="closePopup()">X</h1>
+        </div>
     </div>
 </template>
 
@@ -12,7 +14,7 @@ import popupPhotos from '@/components/popupPhotos.vue'
 
 export default {
   name: 'popup',
-  props: ['house', 'dutyType', 'dutyArea'],
+  props: ['house', 'dutyType', 'dutyArea', 'dutyPersonObj'],
   components: {
       popupPhotos
   },
@@ -23,20 +25,20 @@ export default {
   },
   methods: {
     closePopup() {
-        console.log('closing now...')
+        // console.log('closing now...')
         this.$emit('xClicked')
     },
     getPhotos() {
         let photosObj = {}
         //get house list of students
-        console.log(this.house)
+        // console.log(this.house)
 
         //loop array to create images of taiohi w/ names
     },
     studentSelected() {
-        console.log('student chosen, will now close popup')
+        // console.log('student chosen, will now close popup')
         this.$emit('close')
-    }
+    },
   }
 }
 </script>
@@ -45,6 +47,18 @@ export default {
 * {
     margin: 0;
 }
+
+/* #circle {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+
+    margin-bottom: 10px;
+
+    height: 45px;
+    width: 40px;
+    border: 2px solid black;
+} */
 
 .main {
     display: flex;
@@ -66,19 +80,32 @@ export default {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    width: 60%;
+    width: 90%;
 }
 
 .x {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     color: white;
-    width: 2vw;
-    height: 4vh;
+    width: 3.5vw;
+    height: 5vh;
     margin-top: 20px;
+
+    border: 5px solid white;
+    border-radius: 50%;
+
+    transition: 0.3s;
 }
 
 .x:hover {
     color: red;
     cursor: pointer;
+    border: 5px solid red;
+
+    font-size: 45px;
+
     transition: 0.3s;
 }
 

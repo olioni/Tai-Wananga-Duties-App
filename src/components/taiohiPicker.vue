@@ -2,27 +2,34 @@
   <div class="main">
     <div class="rows">
       <!-- loop over the duties and names to assign to a circle -->
-      <div v-if="remove">
-      </div>
       <div v-for="(value, name) in getDutyArea" :key="name.id" class="circle" :id="name">
-        <div v-if="value" class="box" :style="{ backgroundImage: `url(  ${require(  `../assets/taiohi-photos/${value}.png`  )}  )`, backgroundColor: addButton}" @click="showPopup(name, value)"></div>
+        <!-- TAIOHI PHOTO -->
+        <div
+          v-if="value"
+          class="box"
+          :style="{ backgroundImage: `url(  ${require(  `../assets/taiohi-photos/${value}.png`  )}  )`, backgroundColor: addButton}"
+        >
+          <div class="removeX" v-if="removeFlag" @click="removeTaiohi(name, value)">X</div>
+        </div>
         <div v-else class="box" :style="{backgroundColor: addButton}">
+          <!-- PLUS -->
           <h1 class="plus" @click="showPopup(name, value)" :style="{color: plus}">+</h1>
         </div>
+        <!-- LABEL -->
         <h3 :style="{color: textColor}" class="black">{{name.toUpperCase()}}</h3>
       </div>
     </div>
     <div class="return">
       <router-link to="/">
-        <button id="BACK" :style="{backgroundColor: buttonColor, color: textColor}">BACK</button>
+        <button id="BACK" v-if="hide" :style="{backgroundColor: buttonColor, color: textColor}">BACK</button>
       </router-link>
-      <button id="REMOVE" @click="removeTaiohi()">REMOVE</button>
+      <button id="REMOVE" class="negativeButton" v-if="hide" @click="toggleRemove()">REMOVE</button>
     </div>
+    <button id="DONE" class="negativeButton" v-if="removeFlag" @click="endRemoving()">DONE</button>
   </div>
 </template>
 
 <script>
-
 import { db } from "../components/firebase";
 
 export default {
@@ -45,12 +52,13 @@ export default {
       plus: "",
       dutyPersonObj: {},
       removeObj: null,
+      hide: true,
 
-      remove: false
+      removeFlag: false
     };
   },
   firestore: {
-    dutiesObj: db.collection("duties"),
+    dutiesObj: db.collection("duties")
   },
   mounted() {
     // console.log("from taiohi picker: dutyArea: ", this.dutyArea);
@@ -66,7 +74,19 @@ export default {
       this.addButton = this.modeObj[0].addButton;
       this.addTransition = this.modeObj[0].addTransition;
       this.hover = this.modeObj[0].hover;
+      this.plus = this.modeObj[0].plus;
     });
+
+    // at start of new day, get duty order from db
+
+    //turn obj into array
+
+    // rotate db order
+
+    // updated db with new rotation
+
+
+
   },
   computed: {
     getDutyArea() {
@@ -79,24 +99,39 @@ export default {
     showPopup(dutyType, value) {
       // variable dutyPersonObj holds the duty name and person on clicked duty
       this.dutyPersonObj = {
-        duty: dutyType, 
+        duty: dutyType,
         person: value
-        }
-      
-      // console.log("showing popup for: ", dutyType, "duty person:", value, "object:", dutyPersonObj);
-      
+      };
+
       // emiting duty type
-      this.$emit("plusClicked", this.dutyPersonObj); 
+      this.$emit("plusClicked", this.dutyPersonObj);
+
+      this.removeFlag = false
+      this.hide = true
     },
-    removeTaiohi() {
-      
+    removeTaiohi(name, value) {
+      console.log("name:", name, "value:", value)
+      let dutyAreaRef = db.collection("duties").doc(this.dutyArea);
+
+      let updateObj = {}
+      updateObj[name] = ""
+
+      let removeDuty = dutyAreaRef.update(updateObj)
     },
+    toggleRemove() {
+      this.removeFlag = true
+      this.hide = false
+    },
+    endRemoving() {
+      this.removeFlag = false
+      this.hide = true
+    }
   }
 };
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&family=Rubik:wght@500&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:wght@700&family=Rubik:wght@500&display=swap");
 
 * {
   margin: 0;
@@ -145,8 +180,37 @@ export default {
   height: 5.5vh;
 } */
 
+.removeX {
+  color: white;
+  background-color: rgb(211, 14, 14);
+  height: 50px;
+  width: 50px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  font-size: 20px;
+  font-weight: bolder;
+
+  transition: 0.3s;
+}
+
+.removeX:hover {
+  background-color: red;
+  font-size: 30px;
+
+  transition: 0.3s;
+}
+
 .black {
-  font-family: 'Rubik', sans-serif;
+  font-family: "Rubik", sans-serif;
 }
 
 .return {
@@ -157,7 +221,7 @@ export default {
   justify-content: center;
 }
 
-#REMOVE {
+.negativeButton {
   width: 30vw;
   margin-left: 15px;
   background-color: rgb(187, 16, 16);
@@ -165,7 +229,7 @@ export default {
   transition: 0.3s;
 }
 
-#REMOVE:hover {
+.negativeButton:hover {
   background-color: red;
   transition: 0.3s;
 }
@@ -199,6 +263,7 @@ export default {
   justify-content: center;
   align-items: center;
   background-size: cover;
+  position: relative;
 }
 
 .main {
@@ -220,7 +285,7 @@ button {
   font-size: 40px;
   font-weight: bold;
   margin-top: 40px;
-  font-family: 'PT Sans', sans-serif;
+  font-family: "PT Sans", sans-serif;
 }
 
 button:hover {

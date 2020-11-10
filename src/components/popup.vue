@@ -89,7 +89,7 @@ export default {
     align-items: center;
 
     color: white;
-    width: 3.5vw;
+    width: 2.5vw;
     height: 5vh;
     margin-top: 20px;
 
@@ -104,7 +104,7 @@ export default {
     cursor: pointer;
     border: 5px solid red;
 
-    font-size: 45px;
+    font-size: 40px;
 
     transition: 0.3s;
 }

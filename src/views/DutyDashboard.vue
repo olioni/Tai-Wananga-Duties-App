@@ -17,6 +17,7 @@ import popupPhotos from "@/components/popupPhotos.vue";
 import popupBack from "@/components/popupBack.vue";
 
 import { db } from "../components/firebase";
+import { houses, houseDuties, dutyAreas } from "../components/houseData"
 
 export default {
   name: "DutyDashboard",
@@ -24,7 +25,7 @@ export default {
     taiohiPicker,
     popup,
     popupPhotos,
-    popupBack
+    popupBack,
   },
   data() {
     return {
@@ -34,86 +35,9 @@ export default {
       // kitchenTM: false,
       kitchenTK: true,
       house: "",
-      manawaOnKitchen: {
-        kitchen: "manawa",
-        hokowhitu: "ariki",
-        ilab: "nui",
-        ako: "kaha"
-      },
-      kahaOnKitchen: {
-        kitchen: "kaha",
-        hokowhitu: "nui",
-        ilab: "manawa",
-        ako: "ariki"
-      },
-      arikiOnKitchen: {
-        kitchen: "ariki",
-        hokowhitu: "manawa",
-        ilab: "kaha",
-        ako: "nui"
-      },
-      nuiOnKitchen: {
-        kitchen: "nui",
-        hokowhitu: "kaha",
-        ilab: "ariki",
-        ako: "manawa"
-      },
       popupFlag: false,
       popupBack: false,
       photosFlag: false,
-      nui: [
-        "olioni",
-        "margaret",
-        "atama",
-        "aria",
-        "jodeci",
-        "teise",
-        "cage",
-        "maia",
-        "calais",
-        "nathaniel",
-        "jahnaia"
-      ],
-      ariki: [
-        "mata",
-        "dante",
-        "terangimarie",
-        "meelah",
-        "shiquana",
-        "anton",
-        "oho",
-        "kayah",
-        "pare"
-      ],
-      kaha: [
-        "jesse",
-        "miri",
-        "dallas",
-        "kyden",
-        "lanae",
-        "rongopai",
-        "harley",
-        "nevaeh",
-        "celin",
-        "taliyah",
-        "mihiata"
-      ],
-      manawa: [
-        "kino",
-        "casey",
-        "hekaranga",
-        "cairo",
-        "malakai",
-        "kiana",
-        "kareama",
-        "akaysha",
-        "tainui",
-        "teaurereo",
-        "teahu",
-        "savannah",
-        "shannah",
-        "keyahn"
-      ],
       dutyType: "",
       border: "",
       textColor: "",
@@ -124,9 +48,7 @@ export default {
       mode: "",
       addTransition: "",
       plus: "",
-
       dutyPersonObj: null
-
     };
   },
   // firestore: {
@@ -143,6 +65,14 @@ export default {
       this.plus = this.modeObj[0].plus
       this.addTransition = this.modeObj[0].addTransition
     })
+
+    // YO OLIONI. (From Pā) 
+    // This data can be imported into any component. These arrays and objects will help you replicate the rotation in your Repl.it
+    // moved house data to a separate file. now are imported. see line 20
+    console.log("houses import:", houses)
+    console.log("houseDuties import:", houseDuties)
+    console.log("dutyAreas import:", dutyAreas)
+
   },
   methods: {
     plusClicked(dutyPersonObj) {
@@ -160,9 +90,9 @@ export default {
       this.popupBack = false;
     },
     houseRotation() {
-      if (thiskitchenTK == true) {
-        house = kahaOnKitchen.kitchen;
-      }
+      // if (thiskitchenTK == true) {
+      //   house = kahaOnKitchen.kitchen;
+      // }
     },
     close() {
       this.popupFlag = false;

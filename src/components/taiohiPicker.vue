@@ -23,6 +23,7 @@
       <router-link to="/">
         <button id="BACK" v-if="hide" :style="{backgroundColor: buttonColor, color: textColor}">BACK</button>
       </router-link>
+      <rotate :dutyArea="dutyArea"/>
       <button id="REMOVE" class="negativeButton" v-if="hide" @click="toggleRemove()">REMOVE</button>
     </div>
     <button id="DONE" class="negativeButton" v-if="removeFlag" @click="endRemoving()">DONE</button>
@@ -32,14 +33,21 @@
 <script>
 import { db } from "../components/firebase";
 
+import rotate from "../components/rotate.vue";
+
 export default {
   name: "taiohiPicker",
-  props: ["dutyArea"],
+  components: {
+    rotate
+  },
+  props: ["dutyArea", "house"],
   data() {
     return {
       popup: false,
       dutiesObj: null,
+
       dutyType: "",
+
       border: "",
       textColor: "",
       title: "",
@@ -50,11 +58,15 @@ export default {
       addTransition: "",
       mode: "",
       plus: "",
+
       dutyPersonObj: {},
+
       removeObj: null,
       hide: true,
 
-      removeFlag: false
+      removeFlag: false,
+
+      houseName:''
     };
   },
   firestore: {
@@ -84,9 +96,6 @@ export default {
     // rotate db order
 
     // updated db with new rotation
-
-
-
   },
   computed: {
     getDutyArea() {
@@ -106,26 +115,26 @@ export default {
       // emiting duty type
       this.$emit("plusClicked", this.dutyPersonObj);
 
-      this.removeFlag = false
-      this.hide = true
+      this.removeFlag = false;
+      this.hide = true;
     },
     removeTaiohi(name, value) {
-      console.log("name:", name, "value:", value)
+      // console.log("name:", name, "value:", value)
       let dutyAreaRef = db.collection("duties").doc(this.dutyArea);
 
-      let updateObj = {}
-      updateObj[name] = ""
+      let updateObj = {};
+      updateObj[name] = "";
 
-      let removeDuty = dutyAreaRef.update(updateObj)
+      let removeDuty = dutyAreaRef.update(updateObj);
     },
     toggleRemove() {
-      this.removeFlag = true
-      this.hide = false
+      this.removeFlag = true;
+      this.hide = false;
     },
     endRemoving() {
-      this.removeFlag = false
-      this.hide = true
-    }
+      this.removeFlag = false;
+      this.hide = true;
+    },
   }
 };
 </script>
@@ -223,6 +232,7 @@ export default {
 
 .negativeButton {
   width: 30vw;
+
   margin-left: 15px;
   background-color: rgb(187, 16, 16);
   color: white;

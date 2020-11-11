@@ -47,6 +47,7 @@ export default {
       // console.log(this.house)
 
       //loop array to create images of taiohi w/ names
+      console.log(this.photosObj)
     },
     studentSelected() {
       // console.log('student chosen, will now close popup')

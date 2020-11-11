@@ -110,11 +110,6 @@ export default {
       this.popupFlag = false;
       this.popupBack = false;
     },
-    houseRotation() {
-      // if (thiskitchenTK == true) {
-      //   house = kahaOnKitchen.kitchen;
-      // }
-    },
     close() {
       this.popupFlag = false;
       this.popupBack = false;

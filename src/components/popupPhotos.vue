@@ -61,9 +61,7 @@ export default {
       // this.selectedTaiohi = this.name
       // this.$emit("saveObj", this.selectedTaiohi)
 
-      db.collection("duties")
-        .doc(this.dutyArea)
-        .update(taiohiOnDuty);
+      db.collection("duties").doc(this.dutyArea).update(taiohiOnDuty);
 
       this.close();
     },

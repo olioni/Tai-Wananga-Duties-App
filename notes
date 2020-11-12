@@ -22,4 +22,8 @@ REMOVE FUNCTION:
     a.2 updatedObj[dutyname] = user
     b. db.collections.duties() .where(dutyname, == , user).update(updatedObj)
 
-ALREADY ON DUTY FUNCTION:
+PIN POPUP:
+
+*change REMOVE to AUTO
+ - when auto is clicked show enterPin popup
+ - after pin input flag removetoggle

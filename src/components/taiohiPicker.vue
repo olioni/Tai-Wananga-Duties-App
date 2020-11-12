@@ -23,8 +23,8 @@
       <router-link to="/">
         <button id="BACK" v-if="hide" :style="{backgroundColor: buttonColor, color: textColor}">BACK</button>
       </router-link>
-      <rotate :dutyArea="dutyArea"/>
-      <button id="REMOVE" class="negativeButton" v-if="hide" @click="toggleRemove()">REMOVE</button>
+      <rotate :dutyArea="dutyArea" v-if="hide"/>
+      <button id="REMOVE" class="auto" v-if="hide" @click="togglePin()">{{ toggleMode }}</button>
     </div>
     <button id="DONE" class="negativeButton" v-if="removeFlag" @click="endRemoving()">DONE</button>
   </div>
@@ -44,6 +44,7 @@ export default {
   data() {
     return {
       popup: false,
+
       dutiesObj: null,
 
       dutyType: "",
@@ -66,7 +67,9 @@ export default {
 
       removeFlag: false,
 
-      houseName:''
+      houseName:'',
+
+      toggleMode: ''
     };
   },
   firestore: {
@@ -88,6 +91,8 @@ export default {
       this.hover = this.modeObj[0].hover;
       this.plus = this.modeObj[0].plus;
     });
+
+    this.toggleMode = 'AUTO'
 
     // at start of new day, get duty order from db
 
@@ -135,6 +140,9 @@ export default {
       this.removeFlag = false;
       this.hide = true;
     },
+    togglePin() {
+      this.$emit("togglePin")
+    }
   }
 };
 </script>
@@ -146,48 +154,12 @@ export default {
   margin: 0;
 }
 
-/* #x {
-  color: black;
+.auto {
+  background-color: grey;
+  color: white;
+
+  width: 30vw;
 }
-
-#remove:hover {
-  cursor: pointer;
-  color: red;
-  border: solid 4px red;
-  width: 4.5vw;
-  height: 6vh;
-  transition: 0.3s;
-}
-
-#x:hover {
-  color: red;
-  font-size: 40px;
-  transition: 0.3s;
-} */
-
-/* #remove {
-  width: 40px;
-  height: 40px;
-  border: solid 4px black;
-  color: black;
-  border-radius: 50%;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-  transition: 0.3s;
-}
-
-#remove:hover {
-  color: red;
-  border: solid 4px red;
-  cursor: pointer;
-  transition: 0.3s;
-  width: 4vw;
-  font-size: 23px;
-  height: 5.5vh;
-} */
 
 .removeX {
   color: white;
@@ -224,10 +196,12 @@ export default {
 
 .return {
   display: flex;
-  width: 100vw;
+  width: 70vw;
+  height: 12vh;
+
   flex-direction: row;
-  align-items: center;
-  justify-content: center;
+  align-items: right;
+  justify-content: space-evenly;
 }
 
 .negativeButton {
@@ -246,7 +220,6 @@ export default {
 
 #BACK {
   width: 30vw;
-  margin-right: 15px;
 }
 
 .rows {

@@ -7,7 +7,7 @@
         class="title"
       >{{dutyArea.toUpperCase()}} DUTIES</h1>
     </div>
-    <taiohiPicker @plusClicked="plusClicked" :dutyArea="dutyArea" :house="house"/>
+    <taiohiPicker @plusClicked="plusClicked" @togglePin="togglePin" :dutyArea="dutyArea" :house="house" :pinConfirmed="pinConfirmed"/>
     <popupBack v-if="popupBack" @xClicked="closePopup()"/>
     <popup
       v-if="popupFlag"
@@ -18,6 +18,7 @@
       :dutyPersonObj="dutyPersonObj"
       @close="close()"
     />
+    <pinPopup v-if="pinFlag" :spin="spin" @closePinPopup="closePinPopup" @confirmedPin="confirmedPin"/>
   </div>
 </template>
 
@@ -27,6 +28,7 @@ import taiohiPicker from "@/components/taiohiPicker.vue";
 import popup from "@/components/popup.vue";
 import popupPhotos from "@/components/popupPhotos.vue";
 import popupBack from "@/components/popupBack.vue";
+import pinPopup from "@/components/pinPopup.vue";
 
 import { db } from "../components/firebase";
 import { houses, houseDuties, dutyAreas } from "../components/houseData";
@@ -37,7 +39,8 @@ export default {
     taiohiPicker,
     popup,
     popupPhotos,
-    popupBack
+    popupBack,
+    pinPopup
   },
   data() {
     return {
@@ -64,7 +67,10 @@ export default {
       nui: "",
       ariki: "",
       manawa: "",
-      kaha: ""
+      kaha: "",
+      pinFlag: false,
+      spin: '',
+      pinConfirmed: false
     };
   },
   // firestore: {
@@ -113,6 +119,17 @@ export default {
     close() {
       this.popupFlag = false;
       this.popupBack = false;
+    },
+    togglePin() {
+      this.pinFlag = true
+      this.popupBack = true
+    },
+    closePinPopup() {
+      this.pinFlag = false
+      this.popupBack = false
+    },
+    confirmedPin() {
+      this.pinConfirmed = true
     }
   }
 };

@@ -10,12 +10,9 @@
         :name="name"
         @selected="studentSelected()"
         :dutyPersonObj="dutyPersonObj"
+        :style="{top: top}"
       />
     </div>
-    <!-- <div id="circle">
-            <h1 class="x" @click="closePopup()">X</h1>
-    </div>-->
-
     <button class="CANCEL" @click="closePopup()">CANCEL</button>
   </div>
 </template>
@@ -33,7 +30,8 @@ export default {
     return {
       name: "",
       color: "",
-      houseName: ""
+      houseName: "",
+      top: null,
     };
   },
   methods: {
@@ -55,9 +53,13 @@ export default {
     }
   },
   mounted() {
-    
+    if (this.dutyArea == 'Kitchen') {
+      console.log (this.dutyArea)
+    } else if (this.dutyArea == 'Hokowhitu') {
+      top = 20 + '%'
+    }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -66,18 +68,6 @@ export default {
 * {
   margin: 0;
 }
-
-/* #circle {
-    display: flex;
-    justify-content: center;
-    align-items: center; 
-
-    margin-bottom: 10px;
-
-    height: 45px;
-    width: 40px;
-    border: 2px solid black;
-} */
 
 .main {
   display: flex;
@@ -89,10 +79,10 @@ export default {
   height: 70%;
   border-radius: 15px;
 
-  position: relative;
-  height: 700px;
+  position: absolute;
+  /* height: 700px;
   top: -10%;
-  margin-top: -700px;
+  margin-top: -700px; */
 }
 
 .inside {

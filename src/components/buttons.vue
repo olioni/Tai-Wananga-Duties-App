@@ -1,32 +1,11 @@
 <template>
-    <div clas="main">
-        <div class="title">
-            <h1>TAIOHI DUTIES</h1>
-        </div>
-        <div class="index-buttons">
-            <router-link :to="{name: 'DutyDashboard', params: {id: 'Kitchen', dutiesObj:dutiesObj}}">
-                <button>KITCHEN</button>
-            </router-link>
-            <router-link :to="{name: 'DutyDashboard', params: {id: 'Hokowhitu'}}">
-                <button>HOKOWHITU</button>
-            </router-link>
-            <router-link :to="{name: 'DutyDashboard', params: {id: 'Ilab'}}">
-                <button>ILAB</button>
-            </router-link>
-            <router-link :to="{name: 'DutyDashboard', params: {id: 'Ako'}}">
-                <button>AKO</button>
-            </router-link>
-        </div>
   <div class="main" :style="{backgroundColor: backColor, transition: transTime}">
     <div class="title">
       <h1 :style="{color: textColor, backgroundColor: backColor, transition: transTime, border: border}">TAIOHI DUTIES</h1>
     </div>
     <div class="index-buttons">
       <router-link :to="{name: 'DutyDashboard', params: {id: 'Kitchen'}}">
-        <button
-          @click="variableAssign()"
-          :style="{backgroundColor: buttonColor, transition: transTime}"
-        >
+        <button @click="variableAssign()" :style="{backgroundColor: buttonColor, transition: transTime}">
           <h4 :style="{color: textColor, transition: transTime}">KITCHEN</h4>
         </button>
       </router-link>

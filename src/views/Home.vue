@@ -12,7 +12,6 @@ export default {
   name: "Home",
   components: {
     indexButtons,
-    darkMode
   },
   data() {
     return {

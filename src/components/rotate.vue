@@ -1,13 +1,13 @@
 <template>
   <div class="main">
     <div class="box" :style="{backgroundColor: buttonColor}">
-      <img src="@/assets/white.png" id="rotate" @click="rotate">
+      <img src="@/assets/white.png" id="rotate">
     </div>
   </div>
 </template>
 
 <script>
-
+import { houses, houseDuties, dutyAreas } from "../components/houseData";
 import { db } from "../components/firebase.js";
 
 export default {
@@ -40,7 +40,7 @@ export default {
   },
   methods: {
       rotate() {
-        console.log(this.rotateObj)
+        
       }
   }
 };
@@ -54,13 +54,14 @@ export default {
 }
 
 .box {
-    background-color: #525252;
-    border-radius: 15px;
+  background-color: #525252;
+  border-radius: 15px;
 
-    margin-top: 40px;
+  margin-top: 40px;
 }
 
 .box:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
+
 </style>

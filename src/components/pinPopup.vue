@@ -1,8 +1,8 @@
 <template>
   <div class="main">
     <div class="inside">
-        <h1 id="pinHeading" ref="pin">ENTER 4-DIGIT PIN</h1>
-        <input type="password">
+        <h1 id="pinHeading">ENTER 4-DIGIT PIN</h1>
+        <input type="password" ref="pin">
         <p v-if="incorrectPin">{{ this.msg }}</p>
     </div>
     <div class="buttons">
@@ -20,11 +20,11 @@ export default {
   data() {
     return {
         msg: '',
-        incorrectPin: ''
+        incorrectPin: false
     };
   },
   mounted() {
-      incorrectPin = false
+
   },
   methods: {
     closePopup() {
@@ -32,11 +32,20 @@ export default {
     },
     confirmPin() {
         if (this.$refs.pin.value == 1234) {
-            this.$emit("pinConfirmed")
-            
-        } else {
-            this.msg = 'WRONG PIN, PLEASE TRY AGAIN'
-            incorrectPin = true
+            this.$emit("confirmed")
+            this.incorrectPin = false
+        } else if (this.$refs.pin.value.toString().length == 5) {
+            this.msg = "PIN IS TOO LONG, PLEASE TRY AGAIN"
+            this.incorrectPin = true
+        } else if (this.$refs.pin.value.toString().length == 3) {
+            this.msg = "PIN IS TOO SHORT, PLEASE TRY AGAIN"
+            this.incorrectPin = true
+        } else if (this.$refs.pin.value < 1234 || this.$refs.pin.value > 1234) {
+            this.msg = "INCORRECT PIN, PLEASE TRY AGAIN"
+            this.incorrectPin = true
+        } else if (typeof(this.$refs.pin.value) !== Number) {
+            this.msg = "PIN MUST BE A 4-DIGIT NUMBER"
+            this.incorrectPin = true
         }
     }
   }
@@ -86,6 +95,13 @@ export default {
         border-radius: 10px;
         border: none;
     }   
+
+    p {
+        color: red;
+        margin-top: 25px;
+        font-weight: bold;
+        font-size: 30px;
+    }
 }
 
 
@@ -109,6 +125,12 @@ export default {
     font-size: 20px;
 }
 
+.ENTER:hover {
+    cursor: pointer;
+    background-color: lime;
+
+    transition: 0.3s;
+}
 
 .x {
   display: flex;
@@ -159,12 +181,11 @@ h3 {
   border-radius: 15px;
 
   font-size: 20px;
+}
 
-  .CANCEL:hover {
+.CANCEL:hover {
     background-color: red;
     cursor: pointer;
-
     transition: 0.3s;
-    }
 }
 </style>

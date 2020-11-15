@@ -5,7 +5,7 @@
     </div>
     <div class="index-buttons">
       <router-link :to="{name: 'DutyDashboard', params: {id: 'Kitchen'}}">
-        <button @click="variableAssign()" :style="{backgroundColor: buttonColor, transition: transTime}">
+        <button :style="{backgroundColor: buttonColor, transition: transTime}">
           <h4 :style="{color: textColor, transition: transTime}">KITCHEN</h4>
         </button>
       </router-link>
@@ -63,22 +63,12 @@ export default {
       plus: "",
       hover: "",
       transTime: "0.3s"
-
-      // dark: false,
-      // modes: {currentMode: dark},
     };
   },
   methods: {
-    variableAssign() {},
     lightDark() {
-      // this.dark = !this.dark
-      // this.$forceUpdate()
-      // console.log('switching to', this.dark)
-
-      // db.collection("mode").doc('current').set(this.darkMode)
 
       if (this.mode == "lightMode") {
-        // console.log('going DARK')
         this.mode = "darkMode";
 
         this.mode = "darkMode";
@@ -109,17 +99,9 @@ export default {
           hover: this.hover
         };
 
-        db.collection("mode")
-          .doc("current")
-          .set(style);
+        db.collection("mode").doc("current").set(style);
 
-        // console.log('switch is set to:', this.$refs.switch.checked)
-
-        // this.modes.test = 'dark'
-        // db.collection("mode").doc('current').set(this.modes)
       } else if (this.mode == "darkMode") {
-        // console.log('going LIGHT')
-
         this.mode = "lightMode";
         this.switchText = "LIGHT MODE";
         this.backColor = "white";
@@ -145,18 +127,12 @@ export default {
           hover: this.hover
         };
 
-        db.collection("mode")
-          .doc("current")
-          .set(style);
-        // this.modes.test = 'light'
-        // db.collection("mode").doc('current').set(this.modes)
-        // console.log('switch is set to:', this.$refs.switch.checked)
+        db.collection("mode").doc("current").set(style);
       }
     }
   },
   mounted() {
     this.$bind("modeObj", db.collection("mode")).then(() => {
-      // console.log("from bind", this.modeObj[0].mode)
       this.mode = this.modeObj[0].mode;
       this.backColor = this.modeObj[0].backColor;
       this.textColor = this.modeObj[0].textColor;
@@ -204,7 +180,6 @@ export default {
 .title {
   font-size: 40px;
   bottom: 0;
-  /* width: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;

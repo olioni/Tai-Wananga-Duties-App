@@ -1,17 +1,19 @@
 <template>
   <div class="main">
     <div class="inside">
-      <h1>{{ this.houseName }}</h1>
-      <popupPhotos
-        v-for="name in house"
-        :key="name.id"
-        :dutyType="dutyType"
-        :dutyArea="dutyArea"
-        :name="name"
-        @selected="studentSelected()"
-        :dutyPersonObj="dutyPersonObj"
-        :style="{top: top}"
-      />
+      <h1 id="">{{ this.dutyHouse.toUpperCase() }}</h1>
+      <div class="photoDiv">
+        <popupPhotos
+          v-for="name in house"
+          :key="name.id"
+          :dutyType="dutyType"
+          :dutyArea="dutyArea"
+          :name="name"
+          @selected="studentSelected()"
+          :dutyPersonObj="dutyPersonObj"
+          :style="{top: top}"
+        />
+        </div>
     </div>
     <button class="CANCEL" @click="closePopup()">CANCEL</button>
   </div>
@@ -22,7 +24,7 @@ import popupPhotos from "@/components/popupPhotos.vue";
 
 export default {
   name: "popup",
-  props: ["house", "dutyType", "dutyArea", "dutyPersonObj"],
+  props: ["house", "dutyType", "dutyArea", "dutyPersonObj", "houseName"],
   components: {
     popupPhotos
   },
@@ -30,7 +32,7 @@ export default {
     return {
       name: "",
       color: "",
-      houseName: "",
+      dutyHouse: "",
       top: null,
     };
   },
@@ -39,24 +41,20 @@ export default {
       // console.log('closing now...')
       this.$emit("xClicked");
     },
-    getPhotos() {
-      let photosObj = {};
-      //get house list of students
-      // console.log(this.house)
-
-      //loop array to create images of taiohi w/ names
-      console.log(this.photosObj)
-    },
     studentSelected() {
       // console.log('student chosen, will now close popup')
       this.$emit("close");
     }
   },
   mounted() {
-    if (this.dutyArea == 'Kitchen') {
-      console.log (this.dutyArea)
-    } else if (this.dutyArea == 'Hokowhitu') {
-      top = 20 + '%'
+    if (this.houseName == this.house.nui) {
+      this.dutyHouse = 'tai nui'
+    } else if (this.houseName == this.house.ariki) {
+      this.dutyHouse = 'tai ariki'
+    } else if (this.houseName == this.house.kaha) {
+      this.dutyHouse = 'tai kaha'
+    } else if (this.houseName == this.house.manawa) {
+      this.dutyHouse = 'tai manawa'
     }
   }
 }
@@ -69,6 +67,15 @@ export default {
   margin: 0;
 }
 
+.photoDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  width: 100%;
+  height: 100%;
+}
+
 .main {
   display: flex;
   flex-direction: column;
@@ -78,17 +85,14 @@ export default {
   width: 70%;
   height: 70%;
   border-radius: 15px;
-
   position: absolute;
-  /* height: 700px;
-  top: -10%;
-  margin-top: -700px; */
 }
 
 .inside {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
   width: 90%;
 }
 

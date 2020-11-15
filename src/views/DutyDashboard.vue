@@ -7,7 +7,7 @@
         class="title"
       >{{dutyArea.toUpperCase()}} DUTIES</h1>
     </div>
-    <taiohiPicker @plusClicked="plusClicked" @togglePin="togglePin" :dutyArea="dutyArea" :house="house" :pinConfirmed="pinConfirmed"/>
+    <taiohiPicker @plusClicked="plusClicked" @togglePin="togglePin" :dutyArea="dutyArea" :house="house" :confirmation="confirmation" @cancelConfirmation="closePin()"/>
     <popupBack v-if="popupBack" @xClicked="closePopup()"/>
     <popup
       v-if="popupFlag"
@@ -16,9 +16,10 @@
       :dutyType="dutyType"
       :house="nui"
       :dutyPersonObj="dutyPersonObj"
+      :houseName="houseName"
       @close="close()"
     />
-    <pinPopup v-if="pinFlag" :spin="spin" @closePinPopup="closePinPopup" @confirmedPin="confirmedPin"/>
+    <pinPopup v-if="pinFlag" @closePinPopup="closePinPopup" @confirmed="confirmed"/>
   </div>
 </template>
 
@@ -31,7 +32,7 @@ import popupBack from "@/components/popupBack.vue";
 import pinPopup from "@/components/pinPopup.vue";
 
 import { db } from "../components/firebase";
-import { houses, houseDuties, dutyAreas } from "../components/houseData";
+import { houses, houseDuties, dutyAreas, houseName } from "../components/houseData";
 
 export default {
   name: "DutyDashboard",
@@ -45,15 +46,15 @@ export default {
   data() {
     return {
       dutyArea: this.$route.params.id,
-      // kitchenTA: false,
-      // kitchenTN: false,
-      // kitchenTM: false,
-      kitchenTK: true,
+
       house: "",
+
       popupFlag: false,
       popupBack: false,
       photosFlag: false,
+
       dutyType: "",
+
       border: "",
       textColor: "",
       title: "",
@@ -63,22 +64,20 @@ export default {
       mode: "",
       addTransition: "",
       plus: "",
+
       dutyPersonObj: null,
+
       nui: "",
       ariki: "",
       manawa: "",
       kaha: "",
+
       pinFlag: false,
-      spin: '',
-      pinConfirmed: false
+      confirmation: false
     };
   },
-  // firestore: {
-  //   modeObj: db.collection("mode")
-  // },
   mounted() {
     this.$bind("modeObj", db.collection("mode")).then(() => {
-      // console.log("from bind", this.modeObj[0].mode)
       this.mode = this.modeObj[0].mode;
       this.backColor = this.modeObj[0].backColor;
       this.textColor = this.modeObj[0].textColor;
@@ -88,14 +87,6 @@ export default {
       this.addTransition = this.modeObj[0].addTransition;
     });
 
-    // YO OLIONI. (From Pā)
-    // This data can be imported into any component. These arrays and objects will help you replicate the rotation in your Repl.it
-    // moved house data to a separate file. now are imported. see line 20
-
-    // console.log("houses import:", houses)
-    // console.log("houseDuties import:", houseDuties)
-    // console.log("dutyAreas import:", dutyAreas)
-
     this.ariki = houses.ariki;
     this.nui = houses.nui;
     this.kaha = houses.kaha;
@@ -104,12 +95,10 @@ export default {
   methods: {
     plusClicked(dutyPersonObj) {
       this.dutyPersonObj = dutyPersonObj;
-      // console.log(this.dutyPersonObj)
+
       this.dutyType = dutyPersonObj.duty;
       this.popupFlag = true;
       this.popupBack = true;
-      // console.log(this.popupFlag);
-      // console.log(this.popupBack);
     },
     closePopup() {
       // console.log("x was clicked");
@@ -128,8 +117,13 @@ export default {
       this.pinFlag = false
       this.popupBack = false
     },
-    confirmedPin() {
-      this.pinConfirmed = true
+    confirmed() {
+      this.confirmation = true
+      this.pinFlag = false
+      this.popupBack = false
+    },
+    closePin() {
+      this.confirmation = false
     }
   }
 };

@@ -7,9 +7,9 @@
         <div
           v-if="value"
           class="box"
-          :style="{ backgroundImage: `url(  ${require(  `../assets/taiohi-photos/${value}.png`  )}  )`, backgroundColor: addButton}"
-        >
-          <div class="removeX" v-if="removeFlag" @click="removeTaiohi(name, value)">X</div>
+          :style="{ backgroundImage: `url(  ${require(  `../assets/taiohi-photos/${value}.png`  )}  )`, backgroundColor: addButton}">
+          <!-- CLICKABLE X CIRCLE THAT REMOVES THE TAIOHI -->
+          <div class="removeX" v-if="show" @click="removeTaiohi(name, value)">X</div>
         </div>
         <div v-else class="box" :style="{backgroundColor: addButton}">
           <!-- PLUS -->
@@ -19,14 +19,21 @@
         <h3 :style="{color: textColor}" class="black">{{name.toUpperCase()}}</h3>
       </div>
     </div>
+
+    <!-- DIV WITH BUTTONS -->
     <div class="return">
+
       <router-link to="/">
         <button id="BACK" v-if="hide" :style="{backgroundColor: buttonColor, color: textColor}">BACK</button>
       </router-link>
+
       <rotate :dutyArea="dutyArea" v-if="hide"/>
-      <button id="REMOVE" class="auto" v-if="hide" @click="togglePin()">{{ toggleMode }}</button>
+
+      <button id="auto" v-if="toggleA" @click="togglePin()">AUTO</button>
+      <button id="REMOVE" class="negativeButton" v-if="toggleR || removeFlag" @click="toggleRemove()">REMOVE</button>
+      <button id="DONE" class="negativeButton" v-if="show" @click="endRemoving()">DONE</button>
     </div>
-    <button id="DONE" class="negativeButton" v-if="removeFlag" @click="endRemoving()">DONE</button>
+    
   </div>
 </template>
 
@@ -40,7 +47,7 @@ export default {
   components: {
     rotate
   },
-  props: ["dutyArea", "house"],
+  props: ["dutyArea", "house", "confirmation"],
   data() {
     return {
       popup: false,
@@ -69,18 +76,19 @@ export default {
 
       houseName:'',
 
-      toggleMode: ''
+      toggleMode: '',
+      toggleBack: '',
+      toggleA: true,
+      toggleR: false,
+      show: false
     };
   },
   firestore: {
     dutiesObj: db.collection("duties")
   },
   mounted() {
-    // console.log("from taiohi picker: dutyArea: ", this.dutyArea);
-    // console.log("from taiohi picker: dutiesObj: ", this.dutiesObj);
 
     this.$bind("modeObj", db.collection("mode")).then(() => {
-      // console.log("from bind", this.modeObj[0].mode)
       this.mode = this.modeObj[0].mode;
       this.backColor = this.modeObj[0].backColor;
       this.textColor = this.modeObj[0].textColor;
@@ -93,19 +101,26 @@ export default {
     });
 
     this.toggleMode = 'AUTO'
-
+    
+    // ROTATION FUNCTION: 
     // at start of new day, get duty order from db
 
     //turn obj into array
 
     // rotate db order
 
-    // updated db with new rotation
+    // updated db with new rotation 
+
+  },
+  watch: {
+    confirmation: function(val) {
+      console.log(val, "pin has been confirmed")
+      this.confirmed()
+    } 
   },
   computed: {
     getDutyArea() {
       var dutyAreaObj = this.dutiesObj.filter(obj => obj.id === this.dutyArea);
-      // console.log("from taiohi picker: dutyAreaObj: ", dutyAreaObj); //this is an array with the object at index 0
       return dutyAreaObj[0];
     }
   },
@@ -124,24 +139,36 @@ export default {
       this.hide = true;
     },
     removeTaiohi(name, value) {
-      // console.log("name:", name, "value:", value)
+      // variable dutyAreaRef is the firebase for duties
       let dutyAreaRef = db.collection("duties").doc(this.dutyArea);
 
+      // update object to replace selected taiohi
       let updateObj = {};
       updateObj[name] = "";
 
       let removeDuty = dutyAreaRef.update(updateObj);
     },
     toggleRemove() {
-      this.removeFlag = true;
+      this.removeFlag = false;
+      this.show = true
+      this.toggleR = false
       this.hide = false;
     },
     endRemoving() {
       this.removeFlag = false;
       this.hide = true;
+      this.toggleA = true
+      this.toggleR = false
+      this.show = false
+      this.$emit("endConfirmation")
     },
+    // 
     togglePin() {
       this.$emit("togglePin")
+    },
+    confirmed() {
+      this.toggleA = false
+      this.toggleR = true
     }
   }
 };
@@ -154,7 +181,7 @@ export default {
   margin: 0;
 }
 
-.auto {
+#auto {
   background-color: grey;
   color: white;
 
@@ -200,14 +227,14 @@ export default {
   height: 12vh;
 
   flex-direction: row;
-  align-items: right;
-  justify-content: space-evenly;
+  align-items: center;
+  justify-content: center;
 }
 
 .negativeButton {
   width: 30vw;
 
-  margin-left: 15px;
+  /* margin-left: 15px; */
   background-color: rgb(187, 16, 16);
   color: white;
   transition: 0.3s;

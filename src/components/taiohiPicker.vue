@@ -7,9 +7,9 @@
         <div
           v-if="value"
           class="box"
-          :style="{ backgroundImage: `url(  ${require(  `../assets/taiohi-photos/${value}.png`  )}  )`, backgroundColor: addButton}"
-        >
-          <div class="removeX" v-if="removeFlag" @click="removeTaiohi(name, value)">X</div>
+          :style="{ backgroundImage: `url(  ${require(  `../assets/taiohi-photos/${value}.png`  )}  )`, backgroundColor: addButton}">
+          <!-- CLICKABLE X CIRCLE THAT REMOVES THE TAIOHI -->
+          <div class="removeX" v-if="show" @click="removeTaiohi(name, value)">X</div>
         </div>
         <div v-else class="box" :style="{backgroundColor: addButton}">
           <!-- PLUS -->
@@ -24,6 +24,7 @@
       <router-link to="/" v-if="hide">
         <button id="BACK" v-if="hide" :style="{backgroundColor: buttonColor, color: textColor}">BACK</button>
       </router-link>
+
       <rotate :dutyArea="dutyArea" v-if="hide"/>
       <button id="REMOVE" class="auto" v-if="hideRemove" @click="togglePin()"> AUTO </button>
       <button id="REMOVE" class="negativeButton" v-if="showRemove" @click="toggleRemove()"> REMOVE </button>
@@ -107,7 +108,14 @@ export default {
 
     // rotate db order
 
-    // updated db with new rotation
+    // updated db with new rotation 
+
+  },
+  watch: {
+    confirmation: function(val) {
+      console.log(val, "pin has been confirmed")
+      this.confirmed()
+    } 
   },
   computed: {
     getDutyArea() {
@@ -154,10 +162,19 @@ export default {
       this.showRemove = false;
       this.hideRemove = true;
       this.hide = true;
+      this.toggleA = true
+      this.toggleR = false
+      this.show = false
+      this.$emit("endConfirmation")
     },
+    // 
     togglePin() {
       // emit correct pin
       this.$emit("togglePin")
+    },
+    confirmed() {
+      this.toggleA = false
+      this.toggleR = true
     }
   }
 };
@@ -170,7 +187,7 @@ export default {
   margin: 0;
 }
 
-.auto {
+#auto {
   background-color: grey;
   color: white;
 

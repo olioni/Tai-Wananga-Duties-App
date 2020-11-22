@@ -79,17 +79,6 @@ export default {
   margin-bottom: 5px;
 }
 
-/* .profilePic {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-    background-color: rgb(145, 145, 145);
-    margin-right: 5px;
-    margin-left: 5px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-} */
-
 .unselected:hover {
   border-radius: 50%;
   -webkit-box-shadow: 0px 0px 30px 0px rgb(255, 255, 255);

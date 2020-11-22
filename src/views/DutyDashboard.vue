@@ -16,6 +16,7 @@
       :dutyType="dutyType"
       :house="nui"
       :dutyPersonObj="dutyPersonObj"
+      :houseName="houseName"
       @close="close()"
     />
     <pinPopup v-if="pinFlag" @closePinPopup="closePinPopup" @pinConfirmed="pinConfirmed"/>
@@ -32,7 +33,7 @@ import popupBack from "@/components/popupBack.vue";
 import pinPopup from "@/components/pinPopup.vue";
 
 import { db } from "../components/firebase";
-import { houses, houseDuties, dutyAreas } from "../components/houseData";
+import { houses, houseDuties, dutyAreas, houseName } from "../components/houseData";
 
 export default {
   name: "DutyDashboard",
@@ -47,8 +48,6 @@ export default {
     return {
       dutyArea: this.$route.params.id,
 
-      kitchenTK: true,
-
       house: "",
 
       popupFlag: false,
@@ -56,6 +55,7 @@ export default {
       photosFlag: false,
 
       dutyType: "",
+
       border: "",
       textColor: "",
       title: "",

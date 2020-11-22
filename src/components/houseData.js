@@ -51,6 +51,22 @@ export const houses = {
     "savannah",
     "shannah",
     "keyahn"
+  ],
+  olioni: [
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
+    "olioni",
   ]
 }
 
@@ -87,3 +103,5 @@ export const dutyAreas = {
     iLab: ["Tables", "Computers", "Windows", "Vacuum 1", "Vacuum 2", "Chairs", "Bins"],
     ako: ["Rubbish", "Chairs", "Vacuum 1", "Vacuum 2", "Tables", "Breakout Rooms"]
 }
+
+export const houseNames = ['nui', 'ariki', 'kaha', 'manawa']

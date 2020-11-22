@@ -143,6 +143,13 @@ button:hover {
         border-radius: 10px;
         border: none;
     }   
+
+    p {
+        color: red;
+        margin-top: 25px;
+        font-weight: bold;
+        font-size: 30px;
+    }
 }
 
 
@@ -163,8 +170,11 @@ button:hover {
 
     font-size: 20px;
 
-  .ENTER:hover {
-    background-color: green;
+.ENTER:hover {
+    cursor: pointer;
+    background-color: lime;
+
+    transition: 0.3s;
   }
 }
 
@@ -214,12 +224,12 @@ h3 {
   border-radius: 15px;
 
   font-size: 20px;
+}
 
-  .CANCEL:hover {
+.CANCEL:hover {
     background-color: red;
     cursor: pointer;
-
     transition: 0.3s;
-    }
 }
+
 </style>

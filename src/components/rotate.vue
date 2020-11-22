@@ -1,7 +1,9 @@
 <template>
   <div class="main">
-    <div class="box" :style="{backgroundColor: buttonColor}">
-      <img src="@/assets/white.png" id="rotate" @click="rotate()">
+    <div class="space">
+      <div class="box" :style="{backgroundColor: buttonColor}">
+        <img src="@/assets/white.png" id="rotate" @click="rotate()">
+      </div>
     </div>
   </div>
 </template>
@@ -58,6 +60,11 @@ export default {
 
 .box:hover {
   cursor: pointer;
+}
+
+.space {
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 </style>

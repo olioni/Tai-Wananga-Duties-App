@@ -150,7 +150,6 @@ export default {
   },
   mounted() {
     this.$bind("modeObj", db.collection("mode")).then(() => {
-      // console.log("from bind", this.modeObj[0].mode)
       this.mode = this.modeObj[0].mode;
       this.backColor = this.modeObj[0].backColor;
       this.textColor = this.modeObj[0].textColor;
@@ -198,7 +197,6 @@ export default {
 .title {
   font-size: 40px;
   bottom: 0;
-  /* width: 100%; */
   display: flex;
   justify-content: center;
   align-items: center;

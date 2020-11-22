@@ -24,7 +24,7 @@ import popupPhotos from "@/components/popupPhotos.vue";
 
 export default {
   name: "popup",
-  props: ["house", "dutyType", "dutyArea", "dutyPersonObj", "houseName"],
+  props: ["house", "dutyType", "dutyArea", "dutyPersonObj"],
   components: {
     popupPhotos
   },
@@ -47,13 +47,14 @@ export default {
     }
   },
   mounted() {
-    if (this.houseName == this.house.nui) {
+    console.log(this.houseName)
+    if (this.house == 'nui') {
       this.dutyHouse = 'tai nui'
-    } else if (this.houseName == this.house.ariki) {
+    } else if (this.house == 'ariki') {
       this.dutyHouse = 'tai ariki'
-    } else if (this.houseName == this.house.kaha) {
+    } else if (this.house == 'kaha') {
       this.dutyHouse = 'tai kaha'
-    } else if (this.houseName == this.house.manawa) {
+    } else if (this.house == 'manawa') {
       this.dutyHouse = 'tai manawa'
     }
   }
@@ -82,8 +83,8 @@ export default {
   justify-content: center;
   align-items: center;
   background-color: rgb(61, 61, 61);
-  width: 70%;
-  height: 70%;
+  width: 80%;
+  height: 80%;
   border-radius: 15px;
   position: absolute;
 }

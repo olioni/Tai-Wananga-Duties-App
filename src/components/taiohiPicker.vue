@@ -68,8 +68,6 @@ export default {
 
       removeFlag: false,
 
-      houseName:'',
-
       toggleMode: '',
       
       showRemove: false,

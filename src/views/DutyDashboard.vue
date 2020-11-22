@@ -16,7 +16,6 @@
       :dutyType="dutyType"
       :house="nui"
       :dutyPersonObj="dutyPersonObj"
-      :houseName="houseName"
       @close="close()"
     />
     <pinPopup v-if="pinFlag" @closePinPopup="closePinPopup" @pinConfirmed="pinConfirmed"/>

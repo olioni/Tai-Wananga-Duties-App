@@ -105,3 +105,5 @@ export const dutyAreas = {
 }
 
 export const houseNames = ['nui', 'ariki', 'kaha', 'manawa']
+
+export const areas = ['Kitchen', 'Ako', 'Hokowhitu', 'Ilab']

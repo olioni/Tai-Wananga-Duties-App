@@ -21,7 +21,8 @@ export default {
       image: "",
       mode: "",
       buttonColor: "",
-      dutyObj: ""
+      dutyObj: "",
+      rotateObj: ''
     }
   },
   firestore: {
@@ -33,13 +34,10 @@ export default {
       this.mode = this.modeObj[0].mode;
       this.buttonColor = this.modeObj[0].buttonColor;
     });
-
-
-
-
   },
   methods: {
       rotate() {
+        this.rotateObj = this.dutyObj
         console.log(this.rotateObj)
       }
   }

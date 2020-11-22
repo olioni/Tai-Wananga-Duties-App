@@ -9,7 +9,7 @@
           class="box"
           :style="{ backgroundImage: `url(  ${require(  `../assets/taiohi-photos/${value}.png`  )}  )`, backgroundColor: addButton}">
           <!-- CLICKABLE X CIRCLE THAT REMOVES THE TAIOHI -->
-          <div class="removeX" v-if="show" @click="removeTaiohi(name, value)">X</div>
+          <div class="removeX" v-if="removeFlag" @click="removeTaiohi(name, value)">X</div>
         </div>
         <div v-else class="box" :style="{backgroundColor: addButton}">
           <!-- PLUS -->
@@ -21,12 +21,11 @@
     </div>
     <!-- div full of buttons -->
     <div class="return">
-      <router-link to="/" v-if="hide">
-        <button id="BACK" v-if="hide" :style="{backgroundColor: buttonColor, color: textColor}">BACK</button>
+      <router-link to="/" v-if="toggleDelete">
+        <button id="BACK" v-if="toggleDelete" :style="{backgroundColor: buttonColor, color: textColor}">BACK</button>
       </router-link>
-
-      <rotate :dutyArea="dutyArea" v-if="hide"/>
-      <button id="REMOVE" class="auto" v-if="hideRemove" @click="togglePin()"> AUTO </button>
+      <rotate :dutyArea="dutyArea" v-if="toggleDelete"/>
+      <button id="AUTO" class="auto" v-if="hideRemove" @click="togglePin()"> AUTO </button>
       <button id="REMOVE" class="negativeButton" v-if="showRemove" @click="toggleRemove()"> REMOVE </button>
       <button id="DONE" class="negativeButton" v-if="removeFlag" @click="endRemoving()">DONE</button>
     </div>
@@ -66,7 +65,6 @@ export default {
       dutyPersonObj: {},
 
       removeObj: null,
-      hide: true,
 
       removeFlag: false,
 
@@ -75,7 +73,9 @@ export default {
       toggleMode: '',
       
       showRemove: false,
-      hideRemove: true
+      hideRemove: true,
+      showAuto: false,
+      toggleDelete: true
     }
   },
  watch: {
@@ -110,12 +110,6 @@ export default {
 
     // updated db with new rotation 
 
-  },
-  watch: {
-    confirmation: function(val) {
-      console.log(val, "pin has been confirmed")
-      this.confirmed()
-    } 
   },
   computed: {
     getDutyArea() {
@@ -153,18 +147,16 @@ export default {
     toggleRemove() {
       // function to hide/show buttons in return div 
       this.removeFlag = true;
-      this.showRemove = false;
-      this.hide = false;
+      this.hideRemove = false;
+      this.toggleDelete = false
+      this.showRemove = false
     },
     endRemoving() {
       // function to hide/show buttons in return div
       this.removeFlag = false;
       this.showRemove = false;
       this.hideRemove = true;
-      this.hide = true;
-      this.toggleA = true
-      this.toggleR = false
-      this.show = false
+      this.toggleDelete = true
       this.$emit("endConfirmation")
     },
     // 
@@ -173,8 +165,6 @@ export default {
       this.$emit("togglePin")
     },
     confirmed() {
-      this.toggleA = false
-      this.toggleR = true
     }
   }
 };
@@ -225,6 +215,12 @@ export default {
 
 .black {
   font-family: "Rubik", sans-serif;
+}
+
+.auto {
+  background-color: grey;
+  color: white;
+  width: 30vw;
 }
 
 .return {

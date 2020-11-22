@@ -1,18 +1,7 @@
 <template>
   <div class="popupImg">
-    <!-- <selectedText v-if="selected"/> -->
-    <img
-      v-if="selected"
-      id="selected"
-      :style="{filter: overlay}"
-      :src="require('../assets/taiohi-photos/' + name +'.png' )"
-    >
-    <img
-      v-else
-      class="unselected"
-      :src="require('../assets/taiohi-photos/' + name +'.png' )"
-      @click="saveData()"
-    >
+    <!-- image of taiohi -->
+    <img class="unselected" :src="require('../assets/taiohi-photos/' + name +'.png' )" @click="saveData()">
   </div>
 </template>
 
@@ -38,35 +27,25 @@ export default {
     };
   },
   mounted() {
-    // console.log(this.dutyPersonObj)
-    // for (taiohiName in ) {
-    if (this.dutyPersonObj.person == this.name) {
-      this.selected = true;
-      // console.log(this.dutyPersonObj.person, 'is', this.name)
-      this.overlay = "brightness(50%)";
-    } else {
-      // console.log(this.dutyPersonObj.person)
-      this.overlay = "brightness(100%)";
-    }
 
-    // }
   },
   methods: {
     saveData() {
+      // create empty object named taiohiOnDuty
       let taiohiOnDuty = {};
 
+      // assign taiohiOnDuty a property of dutyType (bins, washing, drying, etc) to taiohi name
       taiohiOnDuty[this.dutyType] = this.name;
 
-      // console.log(this.name + " is in " + this.dutyArea + ' on ' + this.dutyType)
-      // this.selectedTaiohi = this.name
-      // this.$emit("saveObj", this.selectedTaiohi)
-
+      // send to firebase to store in the cloud for pulling down
       db.collection("duties").doc(this.dutyArea).update(taiohiOnDuty);
 
       this.close();
     },
     close() {
-      // console.log('starting xClicked() function')
+      // if a taiohi was selected or the x was clicked then 
+      //emit selected to push up to dutyDashboard
+      // which then hides the popup
       this.$emit("selected");
     }
   }

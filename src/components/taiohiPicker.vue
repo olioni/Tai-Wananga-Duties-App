@@ -19,14 +19,16 @@
         <h3 :style="{color: textColor}" class="black">{{name.toUpperCase()}}</h3>
       </div>
     </div>
+    <!-- div full of buttons -->
     <div class="return">
-      <router-link to="/">
+      <router-link to="/" v-if="hide">
         <button id="BACK" v-if="hide" :style="{backgroundColor: buttonColor, color: textColor}">BACK</button>
       </router-link>
       <rotate :dutyArea="dutyArea" v-if="hide"/>
-      <button id="REMOVE" class="auto" v-if="hide" @click="togglePin()">{{ toggleMode }}</button>
+      <button id="REMOVE" class="auto" v-if="hideRemove" @click="togglePin()"> AUTO </button>
+      <button id="REMOVE" class="negativeButton" v-if="showRemove" @click="toggleRemove()"> REMOVE </button>
+      <button id="DONE" class="negativeButton" v-if="removeFlag" @click="endRemoving()">DONE</button>
     </div>
-    <button id="DONE" class="negativeButton" v-if="removeFlag" @click="endRemoving()">DONE</button>
   </div>
 </template>
 
@@ -40,7 +42,7 @@ export default {
   components: {
     rotate
   },
-  props: ["dutyArea", "house"],
+  props: ["dutyArea", "house", "confirmedPin"],
   data() {
     return {
       popup: false,
@@ -69,18 +71,24 @@ export default {
 
       houseName:'',
 
-      toggleMode: ''
-    };
+      toggleMode: '',
+      
+      showRemove: false,
+      hideRemove: true
+    }
   },
+ watch: {
+    confirmedPin: function (val) {
+      this.showRemove = true
+      this.hideRemove = false
+    }
+ },
   firestore: {
     dutiesObj: db.collection("duties")
   },
   mounted() {
-    // console.log("from taiohi picker: dutyArea: ", this.dutyArea);
-    // console.log("from taiohi picker: dutiesObj: ", this.dutiesObj);
-
+    // during the page loading bind the style changes to pre-defined variables of the same name for style changes
     this.$bind("modeObj", db.collection("mode")).then(() => {
-      // console.log("from bind", this.modeObj[0].mode)
       this.mode = this.modeObj[0].mode;
       this.backColor = this.modeObj[0].backColor;
       this.textColor = this.modeObj[0].textColor;
@@ -92,8 +100,7 @@ export default {
       this.plus = this.modeObj[0].plus;
     });
 
-    this.toggleMode = 'AUTO'
-
+    // ROTATE FUNCTION
     // at start of new day, get duty order from db
 
     //turn obj into array
@@ -104,8 +111,8 @@ export default {
   },
   computed: {
     getDutyArea() {
+      // assign dutyAreaObj the object of duties and taiohi for the specified dutyArea (kitchen, ako, hokowhitu, ilab)
       var dutyAreaObj = this.dutiesObj.filter(obj => obj.id === this.dutyArea);
-      // console.log("from taiohi picker: dutyAreaObj: ", dutyAreaObj); //this is an array with the object at index 0
       return dutyAreaObj[0];
     }
   },
@@ -120,27 +127,36 @@ export default {
       // emiting duty type
       this.$emit("plusClicked", this.dutyPersonObj);
 
+      // show/hide buttons in return div
       this.removeFlag = false;
       this.hide = true;
     },
     removeTaiohi(name, value) {
-      // console.log("name:", name, "value:", value)
+      // assign dutyAreaRef the firebase object for the specified dutyArea (kitchen, ako, hokowhitu, ilab)
       let dutyAreaRef = db.collection("duties").doc(this.dutyArea);
 
+      //update currently selected taiohi with empty object; which removes them from firebase
       let updateObj = {};
       updateObj[name] = "";
 
+      // remove taiohi from duty
       let removeDuty = dutyAreaRef.update(updateObj);
     },
     toggleRemove() {
+      // function to hide/show buttons in return div 
       this.removeFlag = true;
+      this.showRemove = false;
       this.hide = false;
     },
     endRemoving() {
+      // function to hide/show buttons in return div
       this.removeFlag = false;
+      this.showRemove = false;
+      this.hideRemove = true;
       this.hide = true;
     },
     togglePin() {
+      // emit correct pin
       this.$emit("togglePin")
     }
   }
@@ -197,17 +213,15 @@ export default {
 .return {
   display: flex;
   width: 70vw;
-  height: 12vh;
+  height: 18vh;
 
   flex-direction: row;
-  align-items: right;
   justify-content: space-evenly;
+  align-items: center;
 }
 
 .negativeButton {
   width: 30vw;
-
-  margin-left: 15px;
   background-color: rgb(187, 16, 16);
   color: white;
   transition: 0.3s;
@@ -267,7 +281,7 @@ button {
   justify-content: center;
   font-size: 40px;
   font-weight: bold;
-  margin-top: 40px;
+  -top: 40px;
   font-family: "PT Sans", sans-serif;
 }
 

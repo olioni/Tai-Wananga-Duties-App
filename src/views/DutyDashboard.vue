@@ -7,7 +7,7 @@
         class="title"
       >{{dutyArea.toUpperCase()}} DUTIES</h1>
     </div>
-    <taiohiPicker @plusClicked="plusClicked" @togglePin="togglePin" :dutyArea="dutyArea" :house="house" :pinConfirmed="pinConfirmed"/>
+    <taiohiPicker @plusClicked="plusClicked" @togglePin="togglePin" :dutyArea="dutyArea" :house="house" :confirmedPin="confirmedPin"/>
     <popupBack v-if="popupBack" @xClicked="closePopup()"/>
     <popup
       v-if="popupFlag"
@@ -18,12 +18,13 @@
       :dutyPersonObj="dutyPersonObj"
       @close="close()"
     />
-    <pinPopup v-if="pinFlag" :spin="spin" @closePinPopup="closePinPopup" @confirmedPin="confirmedPin"/>
+    <pinPopup v-if="pinFlag" @closePinPopup="closePinPopup" @pinConfirmed="pinConfirmed"/>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
+// import components from the components folder
 import taiohiPicker from "@/components/taiohiPicker.vue";
 import popup from "@/components/popup.vue";
 import popupPhotos from "@/components/popupPhotos.vue";
@@ -45,14 +46,15 @@ export default {
   data() {
     return {
       dutyArea: this.$route.params.id,
-      // kitchenTA: false,
-      // kitchenTN: false,
-      // kitchenTM: false,
+
       kitchenTK: true,
+
       house: "",
+
       popupFlag: false,
       popupBack: false,
       photosFlag: false,
+
       dutyType: "",
       border: "",
       textColor: "",
@@ -63,22 +65,21 @@ export default {
       mode: "",
       addTransition: "",
       plus: "",
+
       dutyPersonObj: null,
+
       nui: "",
       ariki: "",
       manawa: "",
       kaha: "",
+
       pinFlag: false,
-      spin: '',
-      pinConfirmed: false
+      confirmedPin: ''
     };
   },
-  // firestore: {
-  //   modeObj: db.collection("mode")
-  // },
   mounted() {
+    // bind the style changes made in buttons to these dutyDashboard variables
     this.$bind("modeObj", db.collection("mode")).then(() => {
-      // console.log("from bind", this.modeObj[0].mode)
       this.mode = this.modeObj[0].mode;
       this.backColor = this.modeObj[0].backColor;
       this.textColor = this.modeObj[0].textColor;
@@ -88,48 +89,48 @@ export default {
       this.addTransition = this.modeObj[0].addTransition;
     });
 
-    // YO OLIONI. (From Pā)
-    // This data can be imported into any component. These arrays and objects will help you replicate the rotation in your Repl.it
-    // moved house data to a separate file. now are imported. see line 20
-
-    // console.log("houses import:", houses)
-    // console.log("houseDuties import:", houseDuties)
-    // console.log("dutyAreas import:", dutyAreas)
-
+    // assign the specified houses in the houses object to these variables
     this.ariki = houses.ariki;
     this.nui = houses.nui;
     this.kaha = houses.kaha;
     this.manawa = houses.manawa;
   },
   methods: {
+    // when the plus on taiohiPicker is clicked assign the variables
+    // dutyPersonObj and dutyType to variables of the same name AND
+    // set popupFlag and back to true to display them
     plusClicked(dutyPersonObj) {
       this.dutyPersonObj = dutyPersonObj;
-      // console.log(this.dutyPersonObj)
       this.dutyType = dutyPersonObj.duty;
       this.popupFlag = true;
       this.popupBack = true;
-      // console.log(this.popupFlag);
-      // console.log(this.popupBack);
     },
+    // set popupFlag and back to false to hide them
     closePopup() {
-      // console.log("x was clicked");
       this.popupFlag = false;
       this.popupBack = false;
     },
+    // set popupFlag and back to false to hide them
     close() {
       this.popupFlag = false;
       this.popupBack = false;
     },
+    // set pinFlag and popupBack to true to display them
     togglePin() {
       this.pinFlag = true
       this.popupBack = true
     },
+    // set pinFlag and popupBack to false to hide them
     closePinPopup() {
       this.pinFlag = false
       this.popupBack = false
     },
-    confirmedPin() {
-      this.pinConfirmed = true
+    // if the pin is correct set pinFlag and popupBack to false as above
+    // BUT also set confirmed pin to true to state the pin is correct to taiohiPicker
+    pinConfirmed() {
+      this.confirmedPin = true
+      this.pinFlag = false
+      this.popupBack = false
     }
   }
 };

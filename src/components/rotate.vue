@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="box" :style="{backgroundColor: buttonColor}">
-      <img src="@/assets/white.png" id="rotate">
+      <img src="@/assets/white.png" id="rotate" @click="rotate()">
     </div>
   </div>
 </template>
@@ -19,28 +19,26 @@ export default {
       image: "",
       mode: "",
       buttonColor: "",
-      rotateObj: ""
+      dutyObj: ""
     }
   },
   firestore: {
-    rotateObj: db.collection("duties")
+    dutyObj: db.collection("duties")
   },
   mounted() {
+    // pull style changes from firebase and assign to the same named variables for style changes
     this.$bind("modeObj", db.collection("mode")).then(() => {
       this.mode = this.modeObj[0].mode;
-
       this.buttonColor = this.modeObj[0].buttonColor;
     });
 
-    if (this.mode == "darkMode") {
-      this.image = "white.png";
-    } else {
-      this.image = "black.png";
-    }
+
+
+
   },
   methods: {
       rotate() {
-        
+        console.log(this.rotateObj)
       }
   }
 };
@@ -56,8 +54,6 @@ export default {
 .box {
   background-color: #525252;
   border-radius: 15px;
-
-  margin-top: 40px;
 }
 
 .box:hover {

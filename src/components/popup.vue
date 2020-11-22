@@ -36,28 +36,16 @@ export default {
   },
   methods: {
     closePopup() {
-      // console.log('closing now...')
+      // emit xClicked to dutyDashboard to hide the popup when the x is clicked
       this.$emit("xClicked");
     },
-    getPhotos() {
-      let photosObj = {};
-      //get house list of students
-      // console.log(this.house)
-
-      //loop array to create images of taiohi w/ names
-      console.log(this.photosObj)
-    },
     studentSelected() {
-      // console.log('student chosen, will now close popup')
+      // emit close to dutyDashboard to hide popup when taiohi is selected
       this.$emit("close");
     }
   },
   mounted() {
-    if (this.dutyArea == 'Kitchen') {
-      console.log (this.dutyArea)
-    } else if (this.dutyArea == 'Hokowhitu') {
-      top = 20 + '%'
-    }
+    
   }
 }
 </script>

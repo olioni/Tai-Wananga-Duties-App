@@ -1,9 +1,11 @@
 <template>
   <div class="main">
     <div class="inside">
-        <h1 id="pinHeading" ref="pin">ENTER 4-DIGIT PIN</h1>
-        <input type="password">
-        <p v-if="incorrectPin">{{ this.msg }}</p>
+      <h1 id="pinHeading">ENTER 4-DIGIT PIN</h1>
+      <input ref="pin" type="password" max="4" min="4">
+      <div id="errorDiv" v-if="incorrectPin">
+        <p v-if="incorrectPin" id="errorMsg">{{ this.msg }}</p>
+      </div>
     </div>
     <div class="buttons">
         <button class="CANCEL" @click="closePopup()">CANCEL</button>
@@ -20,23 +22,46 @@ export default {
   data() {
     return {
         msg: '',
-        incorrectPin: ''
+        incorrectPin: false,
     };
   },
   mounted() {
-      incorrectPin = false
+      this.incorrectPin = false
   },
   methods: {
     closePopup() {
         this.$emit("closePinPopup")
     },
     confirmPin() {
-        if (this.$refs.pin.value == 1234) {
+        // check if pin is correct pin
+        console.log(this.$refs.pin.value)
+        if (isNaN(this.$refs.pin.value) == false) {
+          if (this.$refs.pin.value == 1234) {
             this.$emit("pinConfirmed")
-            
-        } else {
-            this.msg = 'WRONG PIN, PLEASE TRY AGAIN'
-            incorrectPin = true
+            // check if pin is too long
+          } else if (this.$refs.pin.value.length > 4) {
+            this.msg = 'PIN IS TOO LONG, PLEASE TRY AGAIN'
+            this.incorrectPin = true
+            // check if pin is too short
+          } else if (this.$refs.pin.value.length < 4 && this.$refs.pin.value.length >= 1 && this.$refs.pin.value >= 1) {
+            this.msg = 'PIN IS TOO SHORT, PLEASE TRY AGAIN'
+            this.incorrectPin = true
+            // check if pin is 4 digits, is not a string, but is incorrect
+          } else if (this.$refs.pin.value.length == 4 && this.$refs.pin.value !== 1234) {
+            this.msg = 'PIN IS INCORRECT'
+            this.incorrectPin = true
+            // check if pin is less than one (for decimals)
+          } else if (10 % this.$refs.pin.value <= 1) {
+            this.msg = 'PIN CANNOT BE DECIMAL, PLEASE TRY AGAIN'
+            this.incorrectPin = true
+          } else if (this.$refs.pin.value == '') {
+            this.msg = 'PLEASE ENTER A 4-DIGIT PIN'
+            this.incorrectPin = true
+          }
+        } else if (isNaN(this.$refs.pin.value) == true) {
+          // check if pin is a string
+          this.msg = 'PIN MUST BE A 4-DIGIT NUMBER'
+          this.incorrectPin = true
         }
     }
   }
@@ -48,6 +73,37 @@ export default {
 
 * {
   margin: 0;
+}
+
+button:hover {
+  cursor:pointer;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+
+  height: 10vh;
+  width: 45vw;
+}
+
+#errorDiv {
+  height: 5vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#errorMsg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: red;
+  font-weight: bolder;
+
 }
 
 .main {
@@ -66,10 +122,11 @@ export default {
 .inside {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   width: 90%;
+  // height: 10vh;
 
     h1 {
         color: white;
@@ -97,8 +154,6 @@ export default {
     width: 20vw;
     height: 7vh;
 
-    margin-left: 15px;
-    margin-top: 5%;
 
     background-color: rgb(30, 187, 16);
     color: white;
@@ -107,8 +162,11 @@ export default {
     border-radius: 15px;
 
     font-size: 20px;
-}
 
+  .ENTER:hover {
+    background-color: green;
+  }
+}
 
 .x {
   display: flex;
@@ -118,7 +176,7 @@ export default {
   color: white;
   width: 2.5vw;
   height: 5vh;
-  margin-top: 20px;
+  -top: 20px;
 
   border: 5px solid white;
   border-radius: 50%;
@@ -148,9 +206,6 @@ h3 {
 
   width: 20vw;
   height: 7vh;
-
-  margin-left: 15px;
-  margin-top: 5%;
 
   background-color: rgb(187, 16, 16);
   color: white;

@@ -5,24 +5,32 @@
     </div>
     <div class="index-buttons">
       <router-link :to="{name: 'DutyDashboard', params: {id: 'Kitchen'}}">
-        <button @click="variableAssign()" :style="{backgroundColor: buttonColor, transition: transTime}">
-          <h4 :style="{color: textColor, transition: transTime}">KITCHEN</h4>
-        </button>
+        <div class="buttonSpace">
+          <button :style="{backgroundColor: buttonColor, transition: transTime}">
+            <h4 :style="{color: textColor, transition: transTime}">KITCHEN</h4>
+          </button>
+        </div>
       </router-link>
       <router-link :to="{name: 'DutyDashboard', params: {id: 'Hokowhitu'}}">
-        <button :style="{backgroundColor: buttonColor, transition: transTime}">
-          <h4 :style="{color: textColor, transition: transTime}">HOKOWHITU</h4>
-        </button>
+        <div class="buttonSpace">
+          <button :style="{backgroundColor: buttonColor, transition: transTime}">
+            <h4 :style="{color: textColor, transition: transTime}">HOKOWHITU</h4>
+          </button>
+        </div>
       </router-link>
       <router-link :to="{name: 'DutyDashboard', params: {id: 'Ilab'}}">
-        <button :style="{backgroundColor: buttonColor, transition: transTime}">
-          <h4 :style="{color: textColor, transition: transTime}">ILAB</h4>
-        </button>
+        <div class="buttonSpace">
+          <button :style="{backgroundColor: buttonColor, transition: transTime}">
+            <h4 :style="{color: textColor, transition: transTime}">ILAB</h4>
+          </button>
+        </div>
       </router-link>
       <router-link :to="{name: 'DutyDashboard', params: {id: 'Ako'}}">
-        <button :style="{backgroundColor: buttonColor, transition: transTime}">
-          <h4 :style="{color: textColor, transition: transTime}">AKO</h4>
-        </button>
+        <div class="buttonSpace">
+          <button :style="{backgroundColor: buttonColor, transition: transTime}">
+            <h4 :style="{color: textColor, transition: transTime}">AKO</h4>
+          </button>
+        </div>
       </router-link>
     </div>
 
@@ -62,23 +70,14 @@ export default {
       addTransition: "",
       plus: "",
       hover: "",
-      transTime: "0.3s"
-
-      // dark: false,
-      // modes: {currentMode: dark},
+      transTime: "0.3s",
+      switch: ""
     };
   },
   methods: {
-    variableAssign() {},
     lightDark() {
-      // this.dark = !this.dark
-      // this.$forceUpdate()
-      // console.log('switching to', this.dark)
-
-      // db.collection("mode").doc('current').set(this.darkMode)
-
+      // check if the mode is set to lightmode; change to darkmode
       if (this.mode == "lightMode") {
-        // console.log('going DARK')
         this.mode = "darkMode";
 
         this.mode = "darkMode";
@@ -95,6 +94,7 @@ export default {
 
         this.$refs.switch.checked = true;
 
+        // put all style changes into an object
         let style = {
           mode: this.mode,
           switchText: this.switchText,
@@ -106,19 +106,15 @@ export default {
           addButton: this.addButton,
           addTransition: this.addTransition,
           transTime: this.transTime,
-          hover: this.hover
+          hover: this.hover,
+          switch: this.$refs.switch.checked
         };
 
-        db.collection("mode")
-          .doc("current")
-          .set(style);
+        // upload the style obj to firebase to be pulled down onto DutyDashboard
+        db.collection("mode").doc("current").set(style);
 
-        // console.log('switch is set to:', this.$refs.switch.checked)
-
-        // this.modes.test = 'dark'
-        // db.collection("mode").doc('current').set(this.modes)
+      // check if the mode is set to darkmode; change to lightmode
       } else if (this.mode == "darkMode") {
-        // console.log('going LIGHT')
 
         this.mode = "lightMode";
         this.switchText = "LIGHT MODE";
@@ -133,6 +129,7 @@ export default {
 
         this.$refs.switch.checked = false;
 
+        // put all style changes into an object
         let style = {
           mode: this.mode,
           switchText: this.switchText,
@@ -142,15 +139,12 @@ export default {
           buttonColor: this.buttonColor,
           border: this.border,
           addTransition: this.addTransition,
-          hover: this.hover
+          hover: this.hover,
+          switch: this.$refs.switch.checked
         };
 
-        db.collection("mode")
-          .doc("current")
-          .set(style);
-        // this.modes.test = 'light'
-        // db.collection("mode").doc('current').set(this.modes)
-        // console.log('switch is set to:', this.$refs.switch.checked)
+        // upload the style obj to firebase to be pulled down onto DutyDashboard
+        db.collection("mode").doc("current").set(style);
       }
     }
   },
@@ -166,19 +160,19 @@ export default {
       this.addTransition = this.modeObj[0].addTransition;
     });
 
-    if (this.mode == "darkMode") {
+    if (this.switch.checked == true) {
       this.$refs.switch.checked = true;
     } else {
       this.$refs.switch.checked = false;
     }
   },
   computed() {
-    
+
   }
-};
+}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 * {
   margin: 0;
   display: flex;
@@ -232,22 +226,25 @@ button {
   align-items: center;
   justify-content: center;
   font-size: 40px;
-  margin: 5px;
   font-weight: bold;
 }
 
 button:hover {
-  background-color: #4e4e4e;
-  color: #ffffff;
-  cursor: pointer;
-  transition: 0.3s;
-}
+    background-color: #4e4e4e;
+    color: #ffffff;
+    cursor: pointer;
+    transition: 0.3s;
+  }
 
-button:active {
-  box-shadow: 0 5px rgb(0, 0, 0);
-  transform: translateY(4px);
-  transition: 0.3s;
-}
+  button:active {
+    box-shadow: 0 5px rgb(0, 0, 0);
+    transform: translateY(4px);
+    transition: 0.3s;
+  }
+
+  .buttonSpace {
+    height: 16vh;
+  }
 
 .main {
   margin: 0;

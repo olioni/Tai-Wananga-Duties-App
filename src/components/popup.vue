@@ -47,7 +47,6 @@ export default {
     }
   },
   mounted() {
-    console.log(this.houseName)
     if (this.house == 'nui') {
       this.dutyHouse = 'tai nui'
     } else if (this.house == 'ariki') {

@@ -22,8 +22,8 @@ export default {
       mode: "",
       buttonColor: "",
       dutyObj: "",
-      oldTaiohiArray: '',
-      newTaiohiArray: '',
+      oldTaiohiArray: [],
+      newTaiohiArray: [],
       area: '',
       newObj: '',
       newRotatedObj: {},
@@ -53,33 +53,21 @@ export default {
       for (let x = 0; x < this.dutyObj.length; x++) {
         if (this.dutyObj[x].id == this.dutyArea) {
 
-          let oldTaiohiArray = Object.values(this.dutyObj[x])
-          console.log('old array:', oldTaiohiArray)
+          this.oldTaiohiArray = Object.values(this.dutyObj[x])
+          this.newTaiohiArray = this.rotateArray(this.oldTaiohiArray, 1)
 
-        
-          let newTaiohiArray = this.rotateArray(oldTaiohiArray, 1)
-          console.log('new rotated array:', newTaiohiArray)
-
-          let dutyRotatedObj = {}
-          console.log(this.dutyArea)
-          const placeholder = this.dutyObj
-          console.log(placeholder[this.dutyArea])
-          console.log(placeholder[this.dutyArea].length)
-          for (let y = 0; y < this.dutyObj[this.dutyArea].length; y++) {  
-
-            dutyRotatedObj[this.dutiesObj[this.dutyArea][y]] = newTaiohiArray[y]
-            
-            
+          for (let y = 0; y < this.dutyObj.length; y++) {  
+            if (this.dutyObj[y].id == this.dutyArea) {
+              this.dutyArray = Object.keys(this.dutyObj[y])
+            }
           }
-          console.log(dutyRotatedObj)
-          // console.log(this.dutyArray)          
 
-          // dutyObj[duties[x]] = rotatedStudents[x]
-          // console.log('new obj created:', this.newRotatedObj)
+          for (let z = 0; z < this.dutyArray.length; z++) {
+            this.newRotatedObj[this.dutyArray[z]] = this.newTaiohiArray[z]
+          }         
 
-          // db.collection("duties").doc(this.dutyArea).update(this.newRotatedObj);
-
-      
+          db.collection("duties").doc(this.dutyArea).set(this.newRotatedObj);
+          
         }
       }
     },

@@ -1,19 +1,24 @@
 export const houses = {
     nui: [
     "olioni",
-    "margaret",
-    "atama",
     "aria",
     "jodeci",
-    "teise",
     "cage",
     "maia",
     "calais",
-    "nathaniel",
-    "jahnaia"
+    "nathaniel_t",
+    "jahnaia",
+    "eruera",
+    "maia",
+    "ce_zanne",
+    "nevaeh_k",
+    "meihana",
+    "hineteatakohu",
+    "zariah",
+    "kobe",
+    "ipo"
   ],
   ariki: [
-    "mata",
     "dante",
     "terangimarie",
     "meelah",
@@ -21,10 +26,20 @@ export const houses = {
     "anton",
     "oho",
     "kayah",
-    "pare"
+    "pare",
+    "raven",
+    "metara",
+    "tupuna",
+    "nala",
+    "hiruharama",
+    "jordan",
+    "mashayla",
+    "payton",
+    "alixzae",
+    "kiriwai",
+    "tahlia"
   ],
   kaha: [
-    "jesse",
     "miri",
     "dallas",
     "kyden",
@@ -33,8 +48,18 @@ export const houses = {
     "harley",
     "nevaeh",
     "celin",
-    "taliyah",
-    "mihiata"
+    "mihiata",
+    "tumaia",
+    "mereana",
+    "jordan",
+    "tangaroa",
+    "nathaniel c",
+    "kasey",
+    "tama-nui",
+    "kitana",
+    "sophia",
+    "malakai",
+    "ranea"
   ],
   manawa: [
     "kino",
@@ -50,25 +75,18 @@ export const houses = {
     "teahu",
     "savannah",
     "shannah",
-    "keyahn"
-  ],
-  olioni: [
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
-    "olioni",
+    "keyahn",
+    "wairakau",
+    "dante",
+    "kairi",
+    "mary-jane"
   ]
 }
+
+/* 
+  MISSING TAIOHI:
+  - Maia R
+*/
 
 export const houseDuties = {
     manawaOnKitchen: {

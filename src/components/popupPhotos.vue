@@ -2,6 +2,7 @@
   <div class="popupImg">
     <!-- image of taiohi -->
     <img class="unselected" :src="require('../assets/taiohi-photos/' + name +'.png' )" @click="saveData()">
+    <h3 id="name">{{ name.toUpperCase() }}</h3>
   </div>
 </template>
 
@@ -100,5 +101,7 @@ export default {
 
 #name {
   color: white;
+  position: absolute;
 }
+
 </style>

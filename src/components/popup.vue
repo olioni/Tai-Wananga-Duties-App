@@ -15,12 +15,21 @@
         />
         </div>
     </div>
-    <button class="CANCEL" @click="closePopup()">CANCEL</button>
+    <div class="popupButtons">
+      <div class="cancelButton">
+        <button class="CANCEL" @click="closePopup()">CANCEL</button>
+      </div>
+      <div class="autofillButton">
+        <button class="AUTOFILL" @click="autofillDuties()">AUTOFILL</button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import popupPhotos from "@/components/popupPhotos.vue";
+import { dutyAreas, houses } from '../components/houseData.js';
+import { db } from '../components/firebase.js';
 
 export default {
   name: "popup",
@@ -34,6 +43,16 @@ export default {
       color: "",
       dutyHouse: "",
       top: null,
+
+      dutyObjLength: '',
+      areasName: '',
+      thisAreaName: '',
+      dutyAreaValue: '',
+      houseLength: '',
+      autofillObj: {},
+      listOfTaiohi: '',
+      dutyList: ''
+
     };
   },
   methods: {
@@ -44,6 +63,40 @@ export default {
     studentSelected() {
       // emit close to dutyDashboard to hide popup when taiohi is selected
       this.$emit("close");
+    },
+    autofillDuties() {
+      // on click get length of students in house and length of duties
+      // loop over length of duties
+      // for every iteration of duties length loop assign a random taiohi to each duty
+
+      this.areasName = Object.values(dutyAreas)
+      this.thisAreaName = this.dutyArea
+
+      if (this.thisAreaName == 'Kitchen') {
+        this.dutyAreaValue = 0
+      } else if (this.thisAreaName == 'Hokowhitu') {
+        this.dutyAreaValue = 1
+      } else if (this.thisAreaName == 'Ako') {
+        this.dutyAreaValue = 3
+      } else if (this.thisAreaName == 'Ilab') {
+        this.dutyAreaValue = 2
+      }
+
+      this.dutyObjLength = this.areasName[this.dutyAreaValue].length
+      this.houseLength = this.house.length
+      this.dutyList = this.areasName[this.dutyAreaValue]
+
+      for (let x = 0; x <= this.house.length; x++) {
+        if (this.house == Object.values(houses)[x]) {
+          this.listOfTaiohi = Object.values(houses)[x]
+        }
+      }
+      for (let i = 0; i < this.dutyObjLength; i++) {
+        let randomTaiohi = this.listOfTaiohi[Math.floor(Math.random() * this.houseLength + 1)]
+        this.autofillObj[this.dutyList[i]] = randomTaiohi
+      }
+      db.collection("duties").doc(this.dutyArea).set(this.autofillObj);
+      this.$emit("close")
     }
   },
   mounted() {
@@ -149,6 +202,42 @@ h3 {
 
 .CANCEL:hover {
   background-color: red;
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.popupButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 100%;
+  height: 10vh;
+}
+
+.AUTOFILL {
+  font-family: "PT Sans", sans-serif;
+
+  border: none;
+
+  width: 20vw;
+  height: 7vh;
+
+  margin-left: 15px;
+  margin-top: 5%;
+
+  background-color: rgb(170, 170, 170);
+  color: white;
+  transition: 0.3s;
+
+  border-radius: 15px;
+
+  font-size: 20px;
+}
+
+.AUTOFILL:hover {
+  background-color: rgb(136, 136, 136);
   cursor: pointer;
 
   transition: 0.3s;

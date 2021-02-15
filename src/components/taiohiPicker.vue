@@ -19,13 +19,14 @@
         <h3 :style="{color: textColor}" class="black">{{name.toUpperCase()}}</h3>
       </div>
     </div>
+    
     <!-- div full of buttons -->
     <div class="return">
       <router-link to="/" v-if="toggleDelete">
         <button id="BACK" v-if="toggleDelete" :style="{backgroundColor: buttonColor, color: textColor}">BACK</button>
       </router-link>
       <rotate :dutyArea="dutyArea" v-if="toggleDelete"/>
-      <button id="AUTO" class="auto" v-if="hideRemove" @click="togglePin()"> AUTO </button>
+      <button id="AUTO" class="auto" v-if="hideRemove" @click="togglePin()"> LOCKED </button>
       <button id="REMOVE" class="negativeButton" v-if="showRemove" @click="toggleRemove()"> REMOVE </button>
       <button id="DONE" class="negativeButton" v-if="removeFlag" @click="endRemoving()">DONE</button>
     </div>

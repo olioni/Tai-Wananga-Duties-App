@@ -1,24 +1,30 @@
 <template>
   <div class="dashboard" :style="{backgroundColor: backColor}">
-    <div id="heading">
-      <h1
-        :style="{color: textColor, border: border}"
-        v-if="dutyArea"
-        class="title"
-      >{{dutyArea.toUpperCase()}} DUTIES</h1>
+    <div class="dashboardContainer">
+        <div id="heading">
+          <h1
+            :style="{color: textColor, border: border}"
+            v-if="dutyArea"
+            class="title"
+          >{{dutyArea.toUpperCase()}} DUTIES</h1>
+        </div>
+
+        <div class="innerContainer">
+          <taiohiPicker @plusClicked="plusClicked" @togglePin="togglePin" :dutyArea="dutyArea" :house="house" :confirmedPin="confirmedPin"/>
+        </div>
+
+        <popupBack v-if="popupBack" @xClicked="closePopup()"/>
+        <popup
+          v-if="popupFlag"
+          @xClicked="closePopup()"
+          :dutyArea="dutyArea"
+          :dutyType="dutyType"
+          :house="nui"
+          :dutyPersonObj="dutyPersonObj"
+          @close="close()"
+        />
+        <pinPopup v-if="pinFlag" @closePinPopup="closePinPopup" @pinConfirmed="pinConfirmed"/>
     </div>
-    <taiohiPicker @plusClicked="plusClicked" @togglePin="togglePin" :dutyArea="dutyArea" :house="house" :confirmedPin="confirmedPin"/>
-    <popupBack v-if="popupBack" @xClicked="closePopup()"/>
-    <popup
-      v-if="popupFlag"
-      @xClicked="closePopup()"
-      :dutyArea="dutyArea"
-      :dutyType="dutyType"
-      :house="nui"
-      :dutyPersonObj="dutyPersonObj"
-      @close="close()"
-    />
-    <pinPopup v-if="pinFlag" @closePinPopup="closePinPopup" @pinConfirmed="pinConfirmed"/>
   </div>
 </template>
 
@@ -64,6 +70,7 @@ export default {
       mode: "",
       addTransition: "",
       plus: "",
+      switch: "",
 
       dutyPersonObj: null,
 
@@ -73,7 +80,9 @@ export default {
       kaha: "",
 
       pinFlag: false,
-      confirmedPin: ''
+      confirmedPin: '',
+
+      otherBackColor: ''
     };
   },
   mounted() {
@@ -86,7 +95,14 @@ export default {
       this.buttonColor = this.modeObj[0].buttonColor;
       this.plus = this.modeObj[0].plus;
       this.addTransition = this.modeObj[0].addTransition;
+      this.switch = this.modeObj[0].switch
     });
+
+    if (this.switch == false) {
+      this.otherBackColor = 'rgb(179, 179, 179)'
+    } else {
+      this.otherBackColor = 'rgb(116, 116, 116)'
+    }
 
     // assign the specified houses in the houses object to these variables
     this.ariki = houses.ariki;
@@ -174,4 +190,12 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.dashboardContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 </style>

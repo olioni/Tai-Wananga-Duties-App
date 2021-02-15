@@ -34,23 +34,29 @@
       </router-link>
     </div>
 
-    <!-- switch for dark mode -->
-    <div class="toggleSwitch">
-      <label class="switch">
-        <input ref="switch" type="checkbox" @click="lightDark()">
-        <span class="slider round"></span>
-      </label>
-      <h3 id="modeTxt" :style="{color: textColor, transition: 0.3 + 's'}">{{switchText}}</h3>
+    <div class="settings">
+      <div class="settingsContainer" :style="{backgroundColor: buttonColor, transition: 0.3 + 's'}">
+        <div class="toggleSwitch">
+          <label class="switch">
+            <input ref="switch" type="checkbox" :value="checkboxValue" @click="lightDark()">
+            <span class="slider round"></span>
+          </label>
+          <h3 id="modeTxt" :style="{color: textColor, transition: 0.3 + 's'}">{{switchText}}</h3>
+        </div>
+      </div>
     </div>
+
   </div>
 </template>
 
 <script>
 import { db } from "../components/firebase";
-import { black } from "color-name";
 
 export default {
   name: "indexButtons",
+  components: {
+
+  },
   props: [],
   data() {
     return {
@@ -71,83 +77,92 @@ export default {
       plus: "",
       hover: "",
       transTime: "0.3s",
-      switch: ""
-    };
-  },
-  methods: {
-    lightDark() {
-      // check if the mode is set to lightmode; change to darkmode
-      if (this.mode == "lightMode") {
-        this.mode = "darkMode";
-
-        this.mode = "darkMode";
-        this.switchText = "DARK MODE";
-        this.backColor = "#1a1a1a";
-        this.textColor = "white";
-        this.title = "#d9d9d9";
-        this.buttonColor = "#525252";
-        this.border = "10px solid white";
-        this.addButton = "#454545";
-        this.addTransition = "rgb(51, 51, 51)";
-        this.plus = "#cccccc";
-        this.hover = "#575757";
-
-        this.$refs.switch.checked = true;
-
-        // put all style changes into an object
-        let style = {
-          mode: this.mode,
-          switchText: this.switchText,
-          backColor: this.backColor,
-          textColor: this.textColor,
-          title: this.title,
-          buttonColor: this.buttonColor,
-          border: this.border,
-          addButton: this.addButton,
-          addTransition: this.addTransition,
-          transTime: this.transTime,
-          hover: this.hover,
-          switch: this.$refs.switch.checked
-        };
-
-        // upload the style obj to firebase to be pulled down onto DutyDashboard
-        db.collection("mode").doc("current").set(style);
-
-      // check if the mode is set to darkmode; change to lightmode
-      } else if (this.mode == "darkMode") {
-
-        this.mode = "lightMode";
-        this.switchText = "LIGHT MODE";
-        this.backColor = "white";
-        this.textColor = "black";
-        this.title = "black";
-        this.buttonColor = "rgb(230, 230, 230)";
-        this.border = "10px solid black";
-        this.addTransition = "#808080";
-        this.plus = "#666666";
-        this.hover = "#d6d6d6";
-
-        this.$refs.switch.checked = false;
-
-        // put all style changes into an object
-        let style = {
-          mode: this.mode,
-          switchText: this.switchText,
-          backColor: this.backColor,
-          textColor: this.textColor,
-          title: this.title,
-          buttonColor: this.buttonColor,
-          border: this.border,
-          addTransition: this.addTransition,
-          hover: this.hover,
-          switch: this.$refs.switch.checked
-        };
-
-        // upload the style obj to firebase to be pulled down onto DutyDashboard
-        db.collection("mode").doc("current").set(style);
-      }
+      switch: "",
+      checkboxValue: ""
     }
   },
+    methods: {
+      lightDark() {
+        // check if the mode is set to lightmode; change to darkmode
+        if (this.mode == "lightMode") {
+            this.mode = "darkMode";
+
+            this.mode = "darkMode";
+            this.switchText = "DARK MODE";
+            this.backColor = "#1a1a1a";
+            this.textColor = "white";
+            this.title = "#d9d9d9";
+            this.buttonColor = "#525252";
+            this.border = "10px solid white";
+            this.addButton = "#454545";
+            this.addTransition = "rgb(51, 51, 51)";
+            this.plus = "#cccccc";
+            this.hover = "#575757";
+
+            this.$refs.switch.checked = true;
+            console.log(this.$refs.switch.checked)
+          // put all style changes into an object
+            let style = {
+            mode: this.mode,
+            switchText: this.switchText,
+            backColor: this.backColor,
+            textColor: this.textColor,
+            title: this.title,
+            buttonColor: this.buttonColor,
+            border: this.border,
+            addButton: this.addButton,
+            addTransition: this.addTransition,
+            transTime: this.transTime,
+            hover: this.hover,
+            switch: this.$refs.switch.checked
+            };
+
+          // upload the style obj to firebase to be pulled down onto DutyDashboard
+            db.collection("mode").doc("current").set(style);
+
+          // check if the mode is set to darkmode; change to lightmode
+          } else if (this.mode == "darkMode") {
+
+            this.mode = "lightMode";
+            this.switchText = "LIGHT MODE";
+            this.backColor = "white";
+            this.textColor = "black";
+            this.title = "black";
+            this.buttonColor = "rgb(230, 230, 230)";
+            this.border = "10px solid black";
+            this.addTransition = "#808080";
+            this.plus = "#666666";
+            this.hover = "#d6d6d6";
+
+            this.$refs.switch.checked = false;
+            console.log(this.$refs.switch.checked)
+          // put all style changes into an object
+            let style = {
+            mode: this.mode,
+            switchText: this.switchText,
+            backColor: this.backColor,
+            textColor: this.textColor,
+            title: this.title,
+            buttonColor: this.buttonColor,
+            border: this.border,
+            addTransition: this.addTransition,
+            hover: this.hover,
+            switch: this.$refs.switch.checked
+            };
+
+          // upload the style obj to firebase to be pulled down onto DutyDashboard
+          db.collection("mode").doc("current").set(style);
+        }
+    }
+  },
+  // created() {
+  //   if (this.switch == true) {
+  //     console.log('true')
+  //     this.checkboxValue = true
+  //   } else {
+  //     this.checkboxValue = false
+  //   }
+  // },
   mounted() {
     this.$bind("modeObj", db.collection("mode")).then(() => {
       this.mode = this.modeObj[0].mode;
@@ -158,16 +173,7 @@ export default {
       this.plus = this.modeObj[0].plus;
       this.addTransition = this.modeObj[0].addTransition;
     });
-
-    if (this.switch.checked == true) {
-      this.$refs.switch.checked = true;
-    } else {
-      this.$refs.switch.checked = false;
-    }
   },
-  computed() {
-
-  }
 }
 </script>
 
@@ -320,5 +326,21 @@ input:checked + .slider:before {
 
 .slider.round:before {
   border-radius: 50%;
+}
+
+.settings {
+  height: 10vh;
+  width: 100vw;
+
+  display: flex;
+
+}
+
+.settingsContainer {
+  background-color: rgb(230, 230, 230);
+  width: 50%;
+  height: 100%;
+
+  border-radius: 15px;
 }
 </style>

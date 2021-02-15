@@ -15,7 +15,7 @@ Vue.use(VueRouter)
     path: '/DutyDashboard',
     name: 'DutyDashboard',
     component: DutyDashboard 
-  }                                                                                                                             
+  }                                                                                                                
   ]
 
 const router = new VueRouter({

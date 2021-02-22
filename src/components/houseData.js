@@ -40,25 +40,24 @@ export const houses = {
     "tahlia"
   ],
   kaha: [
-    "miri",
+    "waimirirangi",
     "dallas",
     "kyden",
     "lanae",
     "rongopai",
     "harley",
     "nevaeh",
-    "celin",
+    "celin-aroha",
     "mihiata",
     "tumaia",
-    "mereana",
-    "jordan",
-    "tangaroa",
+    "mereana-rose",
+    "jordan-p",
     "nathaniel c",
     "kasey",
     "tama-nui",
     "kitana",
     "sophia",
-    "malakai",
+    "malakai w",
     "ranea"
   ],
   manawa: [
@@ -80,12 +79,16 @@ export const houses = {
     "dante",
     "kairi",
     "mary-jane"
+  ],
+  olioni: [
+    "olioni"
   ]
 }
 
 /* 
   MISSING TAIOHI:
   - Maia R
+  - Tangaroa
 */
 
 export const houseDuties = {

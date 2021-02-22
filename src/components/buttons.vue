@@ -343,4 +343,8 @@ input:checked + .slider:before {
 
   border-radius: 15px;
 }
+
+.slider.round::after {
+  background-color: white;
+}
 </style>

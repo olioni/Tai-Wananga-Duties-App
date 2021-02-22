@@ -51,7 +51,8 @@ export default {
       houseLength: '',
       autofillObj: {},
       listOfTaiohi: '',
-      dutyList: ''
+      dutyList: '',
+      houseOnDuty: ''
 
     };
   },
@@ -84,19 +85,34 @@ export default {
 
       this.dutyObjLength = this.areasName[this.dutyAreaValue].length
       this.houseLength = this.house.length
+      this.houseOnDuty = this.house
       this.dutyList = this.areasName[this.dutyAreaValue]
 
-      for (let x = 0; x <= this.house.length; x++) {
-        if (this.house == Object.values(houses)[x]) {
-          this.listOfTaiohi = Object.values(houses)[x]
-        }
+      let numberArray = []
+      let randomizedArray = []
+
+      for (let w = 0; w < this.houseLength; w++) {
+        numberArray.push(w)
       }
-      for (let i = 0; i < this.dutyObjLength; i++) {
-        let randomTaiohi = this.listOfTaiohi[Math.floor(Math.random() * this.houseLength + 1)]
-        this.autofillObj[this.dutyList[i]] = randomTaiohi
+
+      for (let x = 0; x < this.houseLength; x++) {
+        let rng = Math.floor(Math.random() * numberArray.length)
+        let random = numberArray.splice(rng, 1)
+        let arrayNumber = random[0]
+        randomizedArray.push(arrayNumber)
       }
+
+      let randomizedStudentArray = []
+
+      for (let z = 0; z < this.dutyObjLength; z++) {
+        randomizedStudentArray.push(this.houseOnDuty[randomizedArray[z]])
+        this.autofillObj[this.dutyList[z]] = randomizedStudentArray[z]
+      }
+      console.log(this.autofillObj)
+
       db.collection("duties").doc(this.dutyArea).set(this.autofillObj);
       this.$emit("close")
+
     }
   },
   mounted() {
